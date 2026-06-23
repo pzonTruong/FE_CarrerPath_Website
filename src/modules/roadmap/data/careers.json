@@ -1,0 +1,207 @@
+[
+  {
+    "id": "frontend",
+    "careerTitle": "Frontend Developer",
+    "description": "Learn to structure, style, and build highly interactive, modern client-side web interfaces.",
+    "skills": ["HTML", "CSS", "JavaScript", "TypeScript", "React", "Vite", "Tailwind CSS"],
+    "roadmapSteps": [
+      {
+        "id": "fe-internet",
+        "title": "Internet & Web Protocols",
+        "description": "Understand the fundamental architecture of the web: DNS servers, domain hosting, client-server models, and secure HTTP request lifecycles.",
+        "subtopics": ["DNS & Name Servers", "HTTP Requests & Response Codes", "Domain Registration & Hosting Models"],
+        "externalResources": [
+          {
+            "title": "How the Web Works",
+            "sourceName": "MDN Web Docs",
+            "url": "https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/How_the_Web_works"
+          },
+          {
+            "title": "HTTP Overview and Specifications",
+            "sourceName": "IETF Standards",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP"
+          }
+        ]
+      },
+      {
+        "id": "fe-html-css",
+        "title": "HTML & CSS Layout Architecture",
+        "description": "Construct pages using semantic tags and style them using modern layout engines like Grid and Flexbox for responsive designs.",
+        "subtopics": ["Semantic markup systems", "CSS Flexbox alignment model", "CSS Grid template specifications"],
+        "externalResources": [
+          {
+            "title": "CSS Grid Guide",
+            "sourceName": "CSS-Tricks Documentation",
+            "url": "https://css-tricks.com/snippets/css/complete-guide-grid/"
+          },
+          {
+            "title": "HTML Living Standard Spec",
+            "sourceName": "WHATWG HTML Reference",
+            "url": "https://html.spec.whatwg.org/"
+          }
+        ]
+      },
+      {
+        "id": "fe-javascript",
+        "title": "Asynchronous JavaScript & DOM",
+        "description": "Learn modern ES6+ runtime mechanics, asynchronous flows via Promises and async-await, and DOM event bindings.",
+        "subtopics": ["ESNext modules and lexical scoping", "Event Loop mechanics", "Promises, microtasks, and async actions"],
+        "externalResources": [
+          {
+            "title": "Modern JS Tutorial",
+            "sourceName": "JavaScript.info Guide",
+            "url": "https://javascript.info/"
+          },
+          {
+            "title": "Fetch API and Request Specifications",
+            "sourceName": "WHATWG Fetch Standard",
+            "url": "https://fetch.spec.whatwg.org/"
+          }
+        ]
+      },
+      {
+        "id": "fe-react",
+        "title": "React Framework & Hook Models",
+        "description": "Implement complex modular user interfaces using component-driven declarative design, rendering cycles, and state variables.",
+        "subtopics": ["Fiber reconciler cycle", "Hook flows (useState, useEffect, useMemo)", "Local and state management contexts"],
+        "externalResources": [
+          {
+            "title": "React Developer Documentation",
+            "sourceName": "React.dev Reference",
+            "url": "https://react.dev/"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "backend",
+    "careerTitle": "Backend Developer",
+    "description": "Learn to design APIs, structure relational/non-relational databases, write business logic, and handle scaling.",
+    "skills": ["Node.js", "Express", "SQL", "MongoDB", "REST APIs", "JWT Security", "Docker"],
+    "roadmapSteps": [
+      {
+        "id": "be-runtime",
+        "title": "JavaScript Runtime (Node.js)",
+        "description": "Understand writing server-side JavaScript using the Node.js runtime environment, filesystem utilities, and package dependencies.",
+        "subtopics": ["Event-driven asynchronous I/O", "Node Package Manager syntax", "Environment configurations"],
+        "externalResources": [
+          {
+            "title": "Node.js Developer Guide",
+            "sourceName": "NodeJS.org Reference",
+            "url": "https://nodejs.org/en/docs"
+          }
+        ]
+      },
+      {
+        "id": "be-apis",
+        "title": "REST API Design & Routing",
+        "description": "Build endpoints using correct HTTP methods, payload formats, status codes, query strings, and request parsers.",
+        "subtopics": ["REST architectural principles", "Express routing and middleware configuration", "JSON serialization"],
+        "externalResources": [
+          {
+            "title": "Architectural Styles and REST",
+            "sourceName": "Fielding Dissertation Reference",
+            "url": "https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm"
+          },
+          {
+            "title": "HTTP Status Response Codes Reference",
+            "sourceName": "MDN Web Docs",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Status"
+          }
+        ]
+      },
+      {
+        "id": "be-databases",
+        "title": "Relational Databases (PostgreSQL)",
+        "description": "Design database tables, indexes, constraints, write structured queries, and handle migrations.",
+        "subtopics": ["Database normalization rules", "SQL query join optimization", "ACID transactions specifications"],
+        "externalResources": [
+          {
+            "title": "PostgreSQL Manuals",
+            "sourceName": "PostgreSQL.org Reference Docs",
+            "url": "https://www.postgresql.org/docs/"
+          }
+        ]
+      },
+      {
+        "id": "be-security",
+        "title": "API Authentication & Token Security",
+        "description": "Secure backend resources using JSON Web Tokens (JWT), session cookies, secure storage, and request rate-limiting.",
+        "subtopics": ["JWT signature verification", "CORS rules and cross-origin controls", "Hash mechanisms for passwords"],
+        "externalResources": [
+          {
+            "title": "JWT Introduction",
+            "sourceName": "JWT.io Specs",
+            "url": "https://jwt.io/introduction/"
+          },
+          {
+            "title": "OWASP Security Threat Checklist",
+            "sourceName": "OWASP Security Foundation Docs",
+            "url": "https://owasp.org/www-project-top-ten/"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "devops",
+    "careerTitle": "DevOps Engineer",
+    "description": "Automate build pipelines, orchestrate container clusters, and manage cloud infrastructure reliably.",
+    "skills": ["Linux Shell", "Docker", "CI/CD Pipelines", "Kubernetes", "AWS Services", "Nginx Configuration"],
+    "roadmapSteps": [
+      {
+        "id": "do-linux",
+        "title": "Linux Systems & Shell Scripting",
+        "description": "Master Unix directory architectures, process controls, user permissions, network diagnostics, and shell tools.",
+        "subtopics": ["POSIX standard commands", "Bash scripts variables", "SSH and keys exchange methods"],
+        "externalResources": [
+          {
+            "title": "GNU Bash Manual",
+            "sourceName": "GNU Software Reference",
+            "url": "https://www.gnu.org/software/bash/manual/"
+          }
+        ]
+      },
+      {
+        "id": "do-containers",
+        "title": "Containerization (Docker)",
+        "description": "Isolate services into lightweight containers. Write custom configurations to compile performant containers.",
+        "subtopics": ["Layered filesystem builds", "Multi-stage builds optimizations", "Network bridges specifications"],
+        "externalResources": [
+          {
+            "title": "Docker Guide and Reference Docs",
+            "sourceName": "Docker Docs Manual",
+            "url": "https://docs.docker.com/"
+          }
+        ]
+      },
+      {
+        "id": "do-pipelines",
+        "title": "Continuous Integration & Pipelines",
+        "description": "Build pipelines that test, build, lint, and deploy code changes dynamically to cluster instances.",
+        "subtopics": ["Pipeline triggers configuration", "Cache build dependencies strategies", "Deploy tokens storage"],
+        "externalResources": [
+          {
+            "title": "GitHub Actions Documentation",
+            "sourceName": "GitHub Documentation Reference",
+            "url": "https://docs.github.com/en/actions"
+          }
+        ]
+      },
+      {
+        "id": "do-k8s",
+        "title": "Container Orchestration (Kubernetes)",
+        "description": "Manage clusters of containers across distributed networks. Automate scalability and fault tolerance.",
+        "subtopics": ["Deployments, pods, and services mapping", "ConfigMaps and Secrets mounting", "Ingress controller systems"],
+        "externalResources": [
+          {
+            "title": "Kubernetes Overview and API Docs",
+            "sourceName": "Kubernetes.io Specs",
+            "url": "https://kubernetes.io/docs/home/"
+          }
+        ]
+      }
+    ]
+  }
+]
