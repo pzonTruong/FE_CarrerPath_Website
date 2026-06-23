@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { Home, User, LogOut, ShieldCheck } from 'lucide-react';
 import { ThemeToggle } from '@/shared/components/ui/theme-toggle';
 import { authApi } from '@/modules/auth/api/auth.api';
 import { tokenStore } from '@/modules/auth/store/token.store';
@@ -9,81 +8,145 @@ import { Button } from '@/shared/components/ui/button';
 import { cn } from '@/shared/lib/utils';
 import type { CurrentUser } from '@/modules/auth/types/auth.types';
 
-const navItems = [
-  { to: '/', label: 'Home', icon: Home },
-  { to: '/profile', label: 'Profile', icon: User },
-];
-
 export const AppLayout = () => {
   const [user, setUser] = useState<CurrentUser | null>(null);
   const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
-    authApi.getMe()
-      .then((res) => setUser(res.data as CurrentUser))
-      .catch(() => {
-        tokenStore.clear();
-        navigate('/login');
-      });
-  }, [navigate]);
+    const token = tokenStore.get();
+    if (token) {
+      authApi.getMe()
+        .then((res) => {
+          if (res?.data) {
+            const userData = res.data as CurrentUser;
+            setUser((prev) => (prev?.email === userData.email ? prev : userData));
+          }
+        })
+        .catch(() => {
+          tokenStore.clear();
+          setTimeout(() => setUser(null), 0);
+        });
+    } else {
+      setTimeout(() => setUser(null), 0);
+    }
+  }, [location.pathname]);
 
   const handleLogout = () => {
     tokenStore.clear();
+    setUser(null);
     navigate('/login');
   };
 
   const initials = user?.email?.slice(0, 2).toUpperCase() ?? '??';
 
+  const isGuest = !user;
+
+  const navItems = [
+    { to: '/', label: 'Home' },
+    { to: '/roadmap', label: 'Roadmaps' },
+    { to: '/features', label: 'Features' },
+    { to: '/contact', label: 'Contact' },
+  ];
+
+  if (!isGuest) {
+    navItems.push({ to: '/profile', label: 'Profile' });
+  }
+
   return (
-    <div className="min-h-screen bg-background">
-      <header className="sticky top-0 z-50 border-b border-border bg-card">
-        <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
+    <div className="min-h-screen flex flex-col bg-background selection:bg-primary selection:text-primary-foreground">
+      {/* Navigation Bar */}
+      <header className="sticky top-0 z-50 border-b-2 border-foreground bg-card text-card-foreground">
+        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 text-sm font-semibold">
-            <div className="flex size-7 items-center justify-center rounded-lg bg-primary/20 text-primary">
-              <ShieldCheck className="size-4" />
-            </div>
-            <span className="hidden sm:inline">MERN Auth</span>
+          <Link to="/" className="flex items-center gap-2 text-sm font-extrabold tracking-wider uppercase">
+            <span className="bg-primary text-primary-foreground px-2 py-1 border border-foreground rounded-[2px] font-mono">
+              PATH
+            </span>
+            <span className="hidden sm:inline font-mono">roadmap.dev</span>
           </Link>
 
-          {/* Nav links */}
-          <nav className="flex items-center gap-1">
+          {/* Links */}
+          <nav className="flex items-center gap-1 sm:gap-2">
             {navItems.map((item) => (
               <Link
                 key={item.to}
                 to={item.to}
                 className={cn(
-                  'inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm transition-colors',
+                  'px-2.5 py-1.5 text-xs uppercase tracking-wider font-mono border border-transparent transition-all rounded-[2px]',
                   location.pathname === item.to
-                    ? 'bg-primary/15 text-primary'
-                    : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                    ? 'bg-primary text-primary-foreground border-foreground'
+                    : 'text-muted-foreground hover:text-foreground hover:border-foreground hover:bg-muted'
                 )}
               >
-                <item.icon className="size-4" />
-                <span className="hidden sm:inline">{item.label}</span>
+                {item.label}
               </Link>
             ))}
           </nav>
 
-          {/* User + logout */}
-          <div className="flex items-center gap-2">
+          {/* Auth buttons */}
+          <div className="flex items-center gap-3">
             <ThemeToggle />
-            <Avatar className="size-8">
-              <AvatarImage src={user?.avatarUrl} alt={user?.email} />
-              <AvatarFallback className="text-xs">{initials}</AvatarFallback>
-            </Avatar>
-            <Button variant="ghost" size="sm" onClick={handleLogout} className="gap-1.5 text-muted-foreground hover:text-foreground">
-              <LogOut className="size-4" />
-              <span className="hidden sm:inline">Logout</span>
-            </Button>
+            {isGuest ? (
+              <div className="flex items-center gap-1 sm:gap-2">
+                <Link
+                  to="/login"
+                  className="px-2.5 py-1.5 text-xs uppercase tracking-wider font-mono border border-foreground bg-background hover:bg-muted transition-all rounded-[2px]"
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/register"
+                  className="hidden sm:inline-block px-2.5 py-1.5 text-xs uppercase tracking-wider font-mono border border-foreground bg-primary text-primary-foreground hover:opacity-90 transition-all rounded-[2px]"
+                >
+                  Register
+                </Link>
+              </div>
+            ) : (
+              <div className="flex items-center gap-2">
+                <Avatar className="size-8 rounded-[2px] border border-foreground">
+                  <AvatarImage src={user?.avatarUrl} alt={user?.email} className="rounded-[2px]" />
+                  <AvatarFallback className="text-xs font-mono font-bold rounded-[2px] bg-muted">{initials}</AvatarFallback>
+                </Avatar>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleLogout}
+                  className="border border-foreground px-2.5 py-1.5 text-xs uppercase tracking-wider font-mono h-8 rounded-[2px] cursor-pointer hover:bg-destructive hover:text-destructive-foreground transition-all"
+                >
+                  Logout
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       </header>
 
-      <main className="mx-auto max-w-6xl px-4 py-8">
+      {/* Main Content Area */}
+      <main className="flex-1 mx-auto w-full max-w-6xl px-4 py-8">
         <Outlet />
       </main>
+
+      {/* Clean Footer */}
+      <footer className="border-t-2 border-foreground bg-card text-card-foreground py-8 mt-auto">
+        <div className="mx-auto max-w-6xl px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex flex-col items-center sm:items-start">
+            <p className="text-sm font-mono font-bold">roadmap.dev</p>
+            <p className="text-xs text-muted-foreground mt-1">
+              Developer-centric paths to coding mastery. REDESIGNED.
+            </p>
+          </div>
+          <div className="flex gap-4 text-xs font-mono uppercase tracking-wider">
+            <Link to="/" className="hover:underline text-muted-foreground hover:text-foreground">Home</Link>
+            <Link to="/roadmap" className="hover:underline text-muted-foreground hover:text-foreground">Roadmaps</Link>
+            <Link to="/features" className="hover:underline text-muted-foreground hover:text-foreground">Features</Link>
+            <Link to="/contact" className="hover:underline text-muted-foreground hover:text-foreground">Contact</Link>
+          </div>
+          <div className="text-xs text-muted-foreground font-mono">
+            &copy; {new Date().getFullYear()} roadmap.dev
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
