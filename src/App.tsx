@@ -7,6 +7,7 @@ import { ForgotPasswordPage } from '@/modules/auth/pages/ForgotPasswordPage';
 import { LogoutPage } from '@/modules/auth/pages/LogoutPage';
 import { HomePage } from '@/modules/home/pages/HomePage';
 import { ProfilePage } from '@/modules/profile/pages/ProfilePage';
+import { RoadmapDetailPage } from '@/modules/roadmap/pages/RoadmapDetailPage';
 import { RoadmapPage } from '@/modules/roadmap/pages/RoadmapPage';
 import { FeaturePage } from '@/modules/features/pages/FeaturePage';
 import { ContactPage } from '@/modules/contact/pages/ContactPage';
@@ -19,6 +20,7 @@ function App() {
         {/* Public routes */}
         <Route path="/" element={<HomePage />} />
         <Route path="/roadmap" element={<RoadmapPage />} />
+        <Route path="/roadmap/:careerId" element={<RoadmapDetailPage />} />
         <Route path="/features" element={<FeaturePage />} />
         <Route path="/contact" element={<ContactPage />} />
 
