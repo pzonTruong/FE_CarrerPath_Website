@@ -121,6 +121,20 @@ export const RoadmapTimeline: React.FC<RoadmapTimelineProps> = ({
                       </div>
                     </div>
                   )}
+
+                  {/* Complete Action Button */}
+                  <div className="pt-4 border-t border-dashed border-foreground">
+                    <button
+                      onClick={(e) => onToggleNodeCompletion(step.id, e)}
+                      className={`px-4 py-2 border-2 border-foreground font-mono font-bold text-xs uppercase tracking-wider transition-all duration-150 cursor-pointer shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-1px] hover:translate-y-[-1px] hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] active:translate-x-[0px] active:translate-y-[0px] active:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] ${
+                        isCompleted
+                          ? 'bg-destructive text-destructive-foreground hover:bg-destructive/95'
+                          : 'bg-primary text-primary-foreground hover:bg-primary/95'
+                      }`}
+                    >
+                      {isCompleted ? 'Mark as Incomplete' : 'Mark as Completed'}
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
