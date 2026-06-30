@@ -11,6 +11,7 @@ import { RoadmapDetailPage } from '@/modules/roadmap/pages/RoadmapDetailPage';
 import { RoadmapPage } from '@/modules/roadmap/pages/RoadmapPage';
 import { FeaturePage } from '@/modules/features/pages/FeaturePage';
 import { ContactPage } from '@/modules/contact/pages/ContactPage';
+import { DashboardPage } from '@/modules/dashboard/pages/DashboardPage';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
 
         {/* Protected routes */}
+        <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
         <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
       </Route>
       <Route path="/logout" element={<LogoutPage />} />

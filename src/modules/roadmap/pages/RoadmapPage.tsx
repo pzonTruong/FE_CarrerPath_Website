@@ -23,7 +23,6 @@ export const RoadmapPage = () => {
           </div>
           <button
             onClick={() => {
-              // Direct navigation fallback simulation via dispatching event or browser redirect if route matches
               window.location.href = '/login';
             }}
             className="px-4 py-2 border-2 border-primary bg-primary text-primary-foreground font-bold hover:bg-primary/90 transition-all rounded-[2px] cursor-pointer shrink-0"
