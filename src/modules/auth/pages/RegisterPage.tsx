@@ -27,10 +27,15 @@ export const RegisterPage = () => {
   const onRegisterSubmit = handleSubmit(async (values) => {
     setLoading(true);
     try {
-      await authApi.register({ email: values.email, password: values.password });
+      const response = await authApi.register({ email: values.email, password: values.password });
       setEmail(values.email);
       setStep('verify');
-      toast.success('OTP sent to your email.');
+      if (response.data?.otp) {
+        setOtp(response.data.otp);
+        toast.success(`Dev OTP: ${response.data.otp}`);
+      } else {
+        toast.success('OTP sent to your email.');
+      }
     } catch (error: unknown) {
       const err = error as { response?: { data?: { message?: string } } };
       toast.error(err?.response?.data?.message ?? 'Something went wrong');
