@@ -32,10 +32,15 @@ export const ForgotPasswordPage = () => {
 
   const onRequestToken = requestForm.handleSubmit(async (values) => {
     try {
-      await authApi.forgotPassword(values.email);
+      const response = await authApi.forgotPassword(values.email);
       setEmail(values.email);
+      if (response.data?.resetToken) {
+        resetForm.setValue('token', response.data.resetToken);
+        toast.success(`Dev reset token: ${response.data.resetToken}`);
+      } else {
+        toast.success('Reset token sent to your email.');
+      }
       setStep('reset');
-      toast.success('Reset token sent to your email.');
     } catch (error: unknown) {
       const err = error as { response?: { data?: { message?: string } } };
       toast.error(err?.response?.data?.message ?? 'Something went wrong');

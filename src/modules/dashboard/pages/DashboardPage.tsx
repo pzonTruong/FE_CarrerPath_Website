@@ -24,15 +24,34 @@ interface CareerPathProgress {
   isEnrolled: boolean;
 }
 
+interface InProgressItem {
+  careerId: string;
+  careerTitle: string;
+  stepId: string;
+  title: string;
+  description: string;
+  order: number;
+  progressPercentage: number;
+}
+
 interface HistoryPoint {
   date: string;
   completedCount: number;
+}
+
+interface LatestUpload {
+  title: string;
+  type: 'certificate' | 'project';
+  uploadedAt: string;
+  url?: string;
 }
 
 interface DashboardData {
   overallCompletion: number;
   careerPaths: CareerPathProgress[];
   history: HistoryPoint[];
+  inProgressItems: InProgressItem[];
+  latestUpload: LatestUpload | null;
 }
 
 export const DashboardPage = () => {
@@ -220,6 +239,103 @@ export const DashboardPage = () => {
                 </ResponsiveContainer>
               </div>
             </div>
+          </div>
+
+          <div className="grid gap-8 lg:grid-cols-[1.4fr_0.8fr]">
+            <section className="border-2 border-foreground bg-card p-5 rounded-[4px] shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] space-y-4">
+              <div className="flex flex-col gap-2 border-b border-foreground pb-3 sm:flex-row sm:items-center sm:justify-between">
+                <h3 className="font-mono text-sm font-bold uppercase tracking-wider">
+                  Currently Learning
+                </h3>
+                <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+                  {data.inProgressItems.length} open lessons
+                </span>
+              </div>
+
+              {data.inProgressItems.length === 0 ? (
+                <div className="border border-dashed border-foreground bg-muted/40 p-5 text-sm text-muted-foreground rounded-[4px]">
+                  All enrolled roadmap lessons are completed. Add another roadmap to keep learning.
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {data.inProgressItems.map((item) => (
+                    <article
+                      key={`${item.careerId}-${item.stepId}`}
+                      className="border border-foreground bg-background p-4 rounded-[4px] space-y-3"
+                    >
+                      <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+                        <div className="space-y-1">
+                          <span className="font-mono text-[10px] uppercase tracking-wider text-primary font-bold">
+                            {item.careerTitle}
+                          </span>
+                          <h4 className="font-mono text-sm font-extrabold uppercase tracking-tight">
+                            {item.title}
+                          </h4>
+                        </div>
+                        <button
+                          onClick={() => navigate(`/roadmap/${item.careerId}`)}
+                          className="w-fit border-2 border-foreground bg-primary px-3 py-1.5 font-mono text-[10px] font-bold uppercase text-primary-foreground rounded-[2px] cursor-pointer"
+                        >
+                          Continue
+                        </button>
+                      </div>
+                      <p className="text-sm text-muted-foreground leading-relaxed">
+                        {item.description}
+                      </p>
+                      <div className="space-y-1">
+                        <div className="flex justify-between font-mono text-[10px] font-bold uppercase">
+                          <span>Roadmap progress</span>
+                          <span className="text-primary">{item.progressPercentage}%</span>
+                        </div>
+                        <div className="h-2 border border-foreground bg-muted rounded-[2px] overflow-hidden">
+                          <div
+                            className="h-full bg-primary"
+                            style={{ width: `${item.progressPercentage}%` }}
+                          />
+                        </div>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              )}
+            </section>
+
+            <section className="border-2 border-foreground bg-card p-5 rounded-[4px] shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] space-y-4">
+              <h3 className="font-mono text-sm font-bold uppercase tracking-wider border-b border-foreground pb-3">
+                Latest Upload
+              </h3>
+
+              {data.latestUpload ? (
+                <div className="space-y-3">
+                  <span className="inline-flex w-fit border border-foreground bg-primary px-2 py-0.5 font-mono text-[10px] font-bold uppercase text-primary-foreground rounded-[2px]">
+                    {data.latestUpload.type}
+                  </span>
+                  <h4 className="font-mono text-lg font-extrabold uppercase tracking-tight">
+                    {data.latestUpload.title}
+                  </h4>
+                  <p className="text-xs text-muted-foreground font-mono uppercase">
+                    Uploaded {new Date(data.latestUpload.uploadedAt).toLocaleDateString()}
+                  </p>
+                  {data.latestUpload.url && (
+                    <a
+                      href={data.latestUpload.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex border-2 border-foreground bg-background px-3 py-2 font-mono text-xs font-bold uppercase rounded-[2px]"
+                    >
+                      View Upload
+                    </a>
+                  )}
+                </div>
+              ) : (
+                <div className="border border-dashed border-foreground bg-muted/40 p-5 rounded-[4px] space-y-2">
+                  <p className="font-mono text-sm font-bold uppercase">No uploads yet</p>
+                  <p className="text-sm text-muted-foreground">
+                    Certificates and project submissions will appear here after the first upload feature is connected.
+                  </p>
+                </div>
+              )}
+            </section>
           </div>
         </>
       )}

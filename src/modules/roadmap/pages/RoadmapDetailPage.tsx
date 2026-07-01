@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { tokenStore } from '@/modules/auth/store/token.store';
+import { progressApi } from '../api/progress.api';
 import { roadmapApi } from '../api/roadmap.api';
 import { RoadmapTimeline } from '../components/RoadmapTimeline';
 import type { CareerPath } from '../types';
@@ -71,6 +72,35 @@ export const RoadmapDetailPage = () => {
     };
   }, [careerId]);
 
+  useEffect(() => {
+    if (!career || !isSignedIn) {
+      return;
+    }
+
+    let ignore = false;
+
+    progressApi.getDashboard()
+      .then((res) => {
+        if (ignore || !res.data?.success) {
+          return;
+        }
+
+        const progress = res.data.data.careerPaths.find(
+          (item: { careerId: string; completedSteps?: string[] }) => item.careerId === career.id
+        );
+        const nodes = Array.isArray(progress?.completedSteps) ? progress.completedSteps : [];
+        setCompletedProgress({ careerId: career.id, nodes });
+        localStorage.setItem(`roadmap_progress_${career.id}`, JSON.stringify(nodes));
+      })
+      .catch(() => {
+        setCompletedProgress({ careerId: career.id, nodes: getStoredCompletedNodes(career.id, isSignedIn) });
+      });
+
+    return () => {
+      ignore = true;
+    };
+  }, [career, isSignedIn]);
+
   const completedNodes = useMemo(() => {
     if (!career) {
       return [];
@@ -93,7 +123,7 @@ export const RoadmapDetailPage = () => {
     return Math.round((completedCount / career.roadmapSteps.length) * 100);
   }, [career, completedNodes]);
 
-  const toggleNodeCompletion = (id: string, e: React.MouseEvent) => {
+  const toggleNodeCompletion = async (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
 
     if (!isSignedIn) {
@@ -105,13 +135,22 @@ export const RoadmapDetailPage = () => {
       return;
     }
 
-    setCompletedProgress(() => {
-      const updated = completedNodes.includes(id)
-        ? completedNodes.filter((item) => item !== id)
-        : [...completedNodes, id];
-      localStorage.setItem(`roadmap_progress_${career.id}`, JSON.stringify(updated));
-      return { careerId: career.id, nodes: updated };
-    });
+    const previousNodes = completedNodes;
+    const updated = completedNodes.includes(id)
+      ? completedNodes.filter((item) => item !== id)
+      : [...completedNodes, id];
+
+    setCompletedProgress({ careerId: career.id, nodes: updated });
+    localStorage.setItem(`roadmap_progress_${career.id}`, JSON.stringify(updated));
+
+    try {
+      await progressApi.toggleStep({ careerId: career.id, stepId: id });
+      toast.success(completedNodes.includes(id) ? 'Skill marked as incomplete.' : 'Skill marked as completed.');
+    } catch (err) {
+      setCompletedProgress({ careerId: career.id, nodes: previousNodes });
+      localStorage.setItem(`roadmap_progress_${career.id}`, JSON.stringify(previousNodes));
+      toast.error('Failed to sync progress. Your change has been rolled back.');
+    }
   };
 
   if (isLoading) {

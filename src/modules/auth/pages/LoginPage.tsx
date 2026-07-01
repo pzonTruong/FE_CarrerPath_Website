@@ -38,7 +38,12 @@ export const LoginPage = () => {
       }
       setEmail(values.email);
       setStep('verify');
-      toast.success('OTP has been sent to your email.');
+      if (response.data?.otp) {
+        setOtp(response.data.otp);
+        toast.success(`Dev OTP: ${response.data.otp}`);
+      } else {
+        toast.success('OTP has been sent to your email.');
+      }
     } catch (error: unknown) {
       const err = error as { response?: { data?: { message?: string; requiresOtp?: boolean; email?: string } } };
       const requiresOtp = Boolean(err?.response?.data?.requiresOtp);
