@@ -1,6 +1,17 @@
 import { http } from '@/shared/api/http';
-import type { CareerPath } from '../types';
+import type {
+  CareerPath,
+  CareerRecommendation,
+  CareerRecommendationHistory,
+  CareerRecommendationInput
+} from '../types';
 
 export const roadmapApi = {
-  getByCareerId: (careerId: string) => http.get<CareerPath>(`/roadmaps/${careerId}`)
+  getByCareerId: (careerId: string) => http.get<CareerPath>(`/roadmaps/${careerId}`),
+  getRecommendations: (input: CareerRecommendationInput) =>
+    http.post<{ recommendations: CareerRecommendation[] }>('/roadmaps/recommendations', input, {
+      timeout: 60000
+    }),
+  getRecommendationHistory: () =>
+    http.get<{ history: CareerRecommendationHistory[] }>('/roadmaps/recommendations/history')
 };

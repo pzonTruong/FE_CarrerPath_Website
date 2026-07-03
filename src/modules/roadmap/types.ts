@@ -19,3 +19,24 @@ export interface CareerPath {
   skills: string[];
   roadmapSteps: RoadmapStep[];
 }
+
+export interface CareerRecommendationInput {
+  skills: string;
+  interests: string;
+  goals: string;
+}
+
+export interface CareerRecommendation {
+  careerTitle: string;
+  reason: string;
+  skillsToLearn: string[];
+}
+
+export interface CareerRecommendationHistory {
+  id: string;
+  skills: string;
+  interests: string;
+  goals: string;
+  recommendations: CareerRecommendation[];
+  createdAt: string;
+}
