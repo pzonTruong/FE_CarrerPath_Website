@@ -13,6 +13,11 @@ import { FeaturePage } from '@/modules/features/pages/FeaturePage';
 import { ContactPage } from '@/modules/contact/pages/ContactPage';
 import { DashboardPage } from '@/modules/dashboard/pages/DashboardPage';
 import { QuizPage } from '@/modules/quiz/pages/QuizPage';
+import { AdminRoute } from '@/modules/admin/components/AdminRoute';
+import { AdminLayout } from '@/modules/admin/pages/AdminLayout';
+import { AdminCareersPage } from '@/modules/admin/pages/AdminCareersPage';
+import { AdminSkillsPage } from '@/modules/admin/pages/AdminSkillsPage';
+import { AdminRoadmapsPage } from '@/modules/admin/pages/AdminRoadmapsPage';
 
 function App() {
   return (
@@ -35,6 +40,15 @@ function App() {
         <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
       </Route>
       <Route path="/quiz/:skillId" element={<ProtectedRoute><QuizPage /></ProtectedRoute>} />
+      
+      {/* Admin routes */}
+      <Route path="/admin" element={<AdminRoute><AdminLayout /></AdminRoute>}>
+        <Route path="careers" element={<AdminCareersPage />} />
+        <Route path="skills" element={<AdminSkillsPage />} />
+        <Route path="roadmaps" element={<AdminRoadmapsPage />} />
+        <Route index element={<Navigate to="careers" replace />} />
+      </Route>
+
       <Route path="/logout" element={<LogoutPage />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

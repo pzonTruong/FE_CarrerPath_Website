@@ -52,6 +52,9 @@ export const AppLayout = () => {
   if (!isGuest) {
     navItems.push({ to: '/dashboard', label: 'Dashboard' });
     navItems.push({ to: '/profile', label: 'Profile' });
+    if (user?.role === 'Admin') {
+      navItems.push({ to: '/admin', label: 'Admin' });
+    }
   }
 
   return (
