@@ -18,4 +18,9 @@ export const adminApi = {
   createRoadmap: (data: any) => http.post('/admin/roadmaps', data),
   updateRoadmap: (id: string, data: any) => http.put(`/admin/roadmaps/${id}`, data),
   deleteRoadmap: (id: string) => http.delete(`/admin/roadmaps/${id}`),
+
+  // Users
+  getUsers: () => http.get('/admin/users'),
+  updateUser: (id: string, data: any) => http.put(`/admin/users/${id}`, data),
+  deleteUser: (id: string) => http.delete(`/admin/users/${id}`),
 };

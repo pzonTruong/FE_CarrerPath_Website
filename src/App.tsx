@@ -18,6 +18,7 @@ import { AdminLayout } from '@/modules/admin/pages/AdminLayout';
 import { AdminCareersPage } from '@/modules/admin/pages/AdminCareersPage';
 import { AdminSkillsPage } from '@/modules/admin/pages/AdminSkillsPage';
 import { AdminRoadmapsPage } from '@/modules/admin/pages/AdminRoadmapsPage';
+import { AdminUsersPage } from '@/modules/admin/pages/AdminUsersPage';
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
         <Route path="careers" element={<AdminCareersPage />} />
         <Route path="skills" element={<AdminSkillsPage />} />
         <Route path="roadmaps" element={<AdminRoadmapsPage />} />
+        <Route path="users" element={<AdminUsersPage />} />
         <Route index element={<Navigate to="careers" replace />} />
       </Route>
 

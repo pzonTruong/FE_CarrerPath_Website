@@ -36,11 +36,9 @@ export function ThemeToggle() {
       size="sm"
       onClick={cycle}
       title={`Theme: ${themeLabels[current]}`}
-      aria-label={`Switch theme (current: ${themeLabels[current]})`}
-      className="gap-1.5 text-muted-foreground hover:text-foreground"
+      className="text-muted-foreground hover:text-foreground hover:bg-muted rounded-full"
     >
       {themeIcons[current]}
-      <span className="hidden sm:inline">{themeLabels[current]}</span>
     </Button>
   );
 }

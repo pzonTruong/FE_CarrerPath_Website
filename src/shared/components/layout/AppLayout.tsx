@@ -4,7 +4,8 @@ import { ThemeToggle } from '@/shared/components/ui/theme-toggle';
 import { authApi } from '@/modules/auth/api/auth.api';
 import { tokenStore } from '@/modules/auth/store/token.store';
 import { Avatar, AvatarFallback, AvatarImage } from '@/shared/components/ui/avatar';
-import { Button } from '@/shared/components/ui/button';
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator } from '@/shared/components/ui/dropdown-menu';
+import { LogOut, User as UserIcon, LayoutDashboard, ShieldAlert } from 'lucide-react';
 import { cn } from '@/shared/lib/utils';
 import type { CurrentUser } from '@/modules/auth/types/auth.types';
 
@@ -42,18 +43,19 @@ export const AppLayout = () => {
 
   const isGuest = !user;
 
-  const navItems = [
+  const clientNavItems = [
     { to: '/', label: 'Home' },
     { to: '/roadmap', label: 'Roadmaps' },
     { to: '/features', label: 'Features' },
     { to: '/contact', label: 'Contact' },
   ];
 
+  const accountNavItems: { to: string; label: string; icon: React.ReactNode }[] = [];
   if (!isGuest) {
-    navItems.push({ to: '/dashboard', label: 'Dashboard' });
-    navItems.push({ to: '/profile', label: 'Profile' });
+    accountNavItems.push({ to: '/dashboard', label: 'Dashboard', icon: <LayoutDashboard className="w-4 h-4 mr-2" /> });
+    accountNavItems.push({ to: '/profile', label: 'Profile', icon: <UserIcon className="w-4 h-4 mr-2" /> });
     if (user?.role === 'Admin') {
-      navItems.push({ to: '/admin', label: 'Admin' });
+      accountNavItems.push({ to: '/admin', label: 'Admin', icon: <ShieldAlert className="w-4 h-4 mr-2" /> });
     }
   }
 
@@ -62,65 +64,98 @@ export const AppLayout = () => {
       {/* Navigation Bar */}
       <header className="sticky top-0 z-50 border-b-2 border-foreground bg-card text-card-foreground">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 text-sm font-extrabold tracking-wider uppercase">
-            <span className="bg-primary text-primary-foreground px-2 py-1 border border-foreground rounded-[2px] font-mono">
-              PATH
-            </span>
-            <span className="hidden sm:inline font-mono">roadmap.dev</span>
-          </Link>
+          {/* Logo & Client Links */}
+          <div className="flex items-center gap-6">
+            <Link to="/" className="flex items-center gap-2 text-sm font-extrabold tracking-wider uppercase">
+              <span className="bg-primary text-primary-foreground px-2 py-1 border border-foreground rounded-[2px] font-mono">
+                PATH
+              </span>
+              <span className="hidden sm:inline font-mono">roadmap.dev</span>
+            </Link>
 
-          {/* Links */}
-          <nav className="flex items-center gap-1 sm:gap-2">
-            {navItems.map((item) => (
-              <Link
-                key={item.to}
-                to={item.to}
-                className={cn(
-                  'px-2.5 py-1.5 text-xs uppercase tracking-wider font-mono border border-transparent transition-all rounded-[2px]',
-                  location.pathname === item.to
-                    ? 'bg-primary text-primary-foreground border-foreground'
-                    : 'text-muted-foreground hover:text-foreground hover:border-foreground hover:bg-muted'
-                )}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
+            <nav className="hidden md:flex items-center gap-1">
+              {clientNavItems.map((item) => (
+                <Link
+                  key={item.to}
+                  to={item.to}
+                  className={cn(
+                    'px-3 py-1.5 text-xs uppercase tracking-wider font-mono transition-colors rounded-full',
+                    location.pathname === item.to
+                      ? 'bg-primary/10 text-primary font-bold'
+                      : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                  )}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+          </div>
 
-          {/* Auth buttons */}
+          {/* Right Side: Account/Admin Links + Auth + Theme Toggle */}
           <div className="flex items-center gap-3">
+            {!isGuest && (
+              <nav className="hidden lg:flex items-center gap-1 mr-2 border-r border-border pr-4">
+                {accountNavItems.map((item) => (
+                  <Link
+                    key={item.to}
+                    to={item.to}
+                    className={cn(
+                      'px-3 py-1.5 text-xs uppercase tracking-wider font-mono transition-colors rounded-full flex items-center',
+                      location.pathname === item.to
+                        ? 'text-foreground font-bold bg-muted'
+                        : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                    )}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </nav>
+            )}
+
             <ThemeToggle />
+            
             {isGuest ? (
-              <div className="flex items-center gap-1 sm:gap-2">
+              <div className="flex items-center gap-2">
                 <Link
                   to="/login"
-                  className="px-2.5 py-1.5 text-xs uppercase tracking-wider font-mono border border-foreground bg-background hover:bg-muted transition-all rounded-[2px]"
+                  className="px-3 py-1.5 text-xs uppercase tracking-wider font-mono rounded-full text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
                 >
                   Login
                 </Link>
                 <Link
                   to="/register"
-                  className="hidden sm:inline-block px-2.5 py-1.5 text-xs uppercase tracking-wider font-mono border border-foreground bg-primary text-primary-foreground hover:opacity-90 transition-all rounded-[2px]"
+                  className="hidden sm:inline-block px-4 py-1.5 text-xs uppercase tracking-wider font-mono rounded-full bg-primary text-primary-foreground hover:opacity-90 transition-opacity"
                 >
                   Register
                 </Link>
               </div>
             ) : (
-              <div className="flex items-center gap-2">
-                <Avatar className="size-8 rounded-[2px] border border-foreground">
-                  <AvatarImage src={user?.avatarUrl} alt={user?.email} className="rounded-[2px]" />
-                  <AvatarFallback className="text-xs font-mono font-bold rounded-[2px] bg-muted">{initials}</AvatarFallback>
-                </Avatar>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleLogout}
-                  className="border border-foreground px-2.5 py-1.5 text-xs uppercase tracking-wider font-mono h-8 rounded-[2px] cursor-pointer hover:bg-destructive hover:text-destructive-foreground transition-all"
-                >
-                  Logout
-                </Button>
-              </div>
+              <DropdownMenu>
+                <DropdownMenuTrigger className="focus:outline-none rounded-full overflow-hidden hover:ring-2 hover:ring-primary transition-all">
+                  <Avatar className="size-9 rounded-full border border-border">
+                    <AvatarImage src={user?.avatarUrl} alt={user?.email} className="rounded-full" />
+                    <AvatarFallback className="text-xs font-mono font-bold rounded-full bg-muted">{initials}</AvatarFallback>
+                  </Avatar>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-48 font-mono uppercase tracking-wider text-xs">
+                  <div className="p-2 pb-1 text-[10px] text-muted-foreground break-all">
+                    {user?.email}
+                  </div>
+                  <DropdownMenuSeparator />
+                  {/* Show mobile account links in dropdown if needed, but let's just show them for all sizes to be safe and clean */}
+                  {accountNavItems.map(item => (
+                     <DropdownMenuItem key={item.to} onClick={() => navigate(item.to)}>
+                       {item.icon}
+                       {item.label}
+                     </DropdownMenuItem>
+                  ))}
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={handleLogout} className="text-destructive focus:text-destructive focus:bg-destructive/10">
+                    <LogOut className="w-4 h-4 mr-2" />
+                    Logout
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             )}
           </div>
         </div>
