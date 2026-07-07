@@ -13,6 +13,16 @@ import { FeaturePage } from '@/modules/features/pages/FeaturePage';
 import { ContactPage } from '@/modules/contact/pages/ContactPage';
 import { DashboardPage } from '@/modules/dashboard/pages/DashboardPage';
 import { QuizPage } from '@/modules/quiz/pages/QuizPage';
+import { AdminRoute } from '@/modules/admin/components/AdminRoute';
+import { AdminLayout } from '@/modules/admin/pages/AdminLayout';
+import { AdminSkillsPage } from '@/modules/admin/pages/AdminSkillsPage';
+import { AdminRoadmapsPage } from '@/modules/admin/pages/AdminRoadmapsPage';
+import { AdminUsersPage } from '@/modules/admin/pages/AdminUsersPage';
+import { CareerPathBuilderPage } from '@/modules/admin/pages/CareerPathBuilderPage';
+import { CareerPathsPage } from '@/modules/admin/pages/CareerPathsPage';
+import { AdminResourcesPage } from '@/modules/admin/pages/AdminResourcesPage';
+import { AdminSettingsPage } from '@/modules/admin/pages/AdminSettingsPage';
+import { AdminSupportPage } from '@/modules/admin/pages/AdminSupportPage';
 
 function App() {
   return (
@@ -35,6 +45,21 @@ function App() {
         <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
       </Route>
       <Route path="/quiz/:skillId" element={<ProtectedRoute><QuizPage /></ProtectedRoute>} />
+      
+      {/* Admin routes */}
+      <Route path="/admin" element={<AdminRoute><AdminLayout /></AdminRoute>}>
+        <Route path="career-paths" element={<CareerPathsPage />} />
+        <Route path="career-paths/new" element={<CareerPathBuilderPage />} />
+        <Route path="career-paths/:id" element={<CareerPathBuilderPage />} />
+        <Route path="skills" element={<AdminSkillsPage />} />
+        <Route path="resources" element={<AdminResourcesPage />} />
+        <Route path="roadmaps" element={<AdminRoadmapsPage />} />
+        <Route path="users" element={<AdminUsersPage />} />
+        <Route path="settings" element={<AdminSettingsPage />} />
+        <Route path="support" element={<AdminSupportPage />} />
+        <Route index element={<Navigate to="career-paths" replace />} />
+      </Route>
+
       <Route path="/logout" element={<LogoutPage />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
