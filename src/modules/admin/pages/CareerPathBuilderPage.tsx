@@ -14,7 +14,7 @@ const levelSchema = z.object({
   learningResources: z.array(z.object({
     title: z.string().min(1, 'Resource title is required'),
     type: z.string().min(1, 'Resource type is required'),
-    url: z.string().url('Invalid URL')
+    url: z.string().min(1, 'Resource URL is required')
   }))
 });
 
@@ -71,7 +71,7 @@ export const CareerPathBuilderPage = () => {
     defaultValues
   });
 
-  const { control, handleSubmit, register, reset, setValue } = methods;
+  const { control, handleSubmit, register, reset, setValue, formState: { errors } } = methods;
   
   const { fields: levels, append: appendLevel, remove: removeLevel } = useFieldArray({
     control,
@@ -99,12 +99,21 @@ export const CareerPathBuilderPage = () => {
           const data = pathResponse.data;
 
           // Format levels for react-hook-form: requiredSkills must be ID strings
-          const formattedLevels = (data.levels || []).map((level: any) => ({
-            name: level.name || '',
-            requiredSkills: (level.requiredSkills || []).map((s: any) => typeof s === 'object' ? s._id : s),
-            competencies: level.competencies || [],
-            learningResources: level.learningResources || []
-          }));
+          const formattedLevels = (data.levels && data.levels.length > 0)
+            ? data.levels.map((level: any) => ({
+                name: level.name || '',
+                requiredSkills: (level.requiredSkills || []).map((s: any) => typeof s === 'object' ? s._id : s),
+                competencies: level.competencies || [],
+                learningResources: level.learningResources || []
+              }))
+            : [
+                {
+                  name: 'LEVEL 1: CORE DEVELOPER',
+                  requiredSkills: (data.skillIds || []).map((s: any) => typeof s === 'object' ? s._id : s),
+                  competencies: ['Demonstrates base skill proficiency.'],
+                  learningResources: []
+                }
+              ];
 
           reset({
             pathName: data.pathName || data.title || '',
@@ -281,13 +290,13 @@ export const CareerPathBuilderPage = () => {
   }
 
   return (
-    <div className="p-8 max-w-7xl mx-auto text-slate-200">
+    <div className="p-8 max-w-7xl mx-auto text-foreground">
       <div className="flex justify-between items-center mb-8">
         <div>
-          <p className="text-sm font-bold text-slate-400 uppercase tracking-wide mb-1">
+          <p className="text-sm font-bold text-muted-foreground uppercase tracking-wide mb-1">
             Admin &gt; Career Paths &gt; {isEditMode ? 'Edit Path' : 'New Path'}
           </p>
-          <h1 className="text-3xl font-extrabold text-white">
+          <h1 className="text-3xl font-extrabold text-foreground">
             {isEditMode ? 'EDIT CAREER PATH' : 'CREATE NEW CAREER PATH'}
           </h1>
         </div>
@@ -295,13 +304,13 @@ export const CareerPathBuilderPage = () => {
           <button 
             type="button" 
             onClick={() => navigate('/admin/career-paths')}
-            className="px-6 py-2 rounded border border-slate-700 text-slate-300 font-semibold hover:bg-slate-800 transition"
+            className="px-6 py-2 rounded border border-input text-muted-foreground font-semibold hover:bg-muted transition"
           >
             Cancel
           </button>
           <button 
             onClick={handleSubmit(onSubmit)}
-            className="px-6 py-2 rounded bg-amber-400 text-black font-extrabold hover:bg-amber-500 transition shadow-md"
+            className="px-6 py-2 rounded bg-primary text-primary-foreground font-extrabold hover:opacity-90 transition shadow-md"
           >
             {isEditMode ? 'Save Changes' : 'Save Path'}
           </button>
@@ -313,22 +322,23 @@ export const CareerPathBuilderPage = () => {
           <div className="xl:col-span-2 space-y-8">
             
             {/* General Information */}
-            <div className="bg-[#0f0f11] rounded-xl border border-slate-800 p-6">
-              <h2 className="text-amber-400 font-bold uppercase tracking-wide mb-6">General Information</h2>
+            <div className="bg-card rounded-xl border border-border p-6 shadow-md">
+              <h2 className="text-primary font-bold uppercase tracking-wide mb-6">General Information</h2>
               <div className="grid grid-cols-2 gap-6 mb-6">
                 <div>
-                  <label className="block text-xs font-bold text-slate-400 uppercase mb-2">Path Name</label>
+                  <label className="block text-xs font-bold text-muted-foreground uppercase mb-2">Path Name</label>
                   <input 
                     {...register('pathName')}
-                    className="w-full bg-[#0a0a0b] border border-slate-700 rounded p-3 text-white focus:outline-none focus:border-amber-400"
+                    className="w-full bg-background border border-input rounded p-3 text-foreground focus:outline-none focus:border-primary"
                     placeholder="e.g. Frontend Engineer"
                   />
+                  {errors.pathName && <p className="text-red-500 text-xs mt-1 font-bold">{errors.pathName.message}</p>}
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-slate-400 uppercase mb-2">Department</label>
+                  <label className="block text-xs font-bold text-muted-foreground uppercase mb-2">Department</label>
                   <select 
                     {...register('department')}
-                    className="w-full bg-[#0a0a0b] border border-slate-700 rounded p-3 text-white focus:outline-none focus:border-amber-400 appearance-none"
+                    className="w-full bg-background border border-input rounded p-3 text-foreground focus:outline-none focus:border-primary appearance-none"
                   >
                     <option value="Engineering">Engineering</option>
                     <option value="Design">Design</option>
@@ -337,19 +347,20 @@ export const CareerPathBuilderPage = () => {
                 </div>
               </div>
               <div>
-                <label className="block text-xs font-bold text-slate-400 uppercase mb-2">Description</label>
+                <label className="block text-xs font-bold text-muted-foreground uppercase mb-2">Description</label>
                 <textarea 
                   {...register('description')}
-                  className="w-full bg-[#0a0a0b] border border-slate-700 rounded p-3 text-white focus:outline-none focus:border-amber-400 min-h-[100px]"
+                  className="w-full bg-background border border-input rounded p-3 text-foreground focus:outline-none focus:border-primary min-h-[100px]"
                   placeholder="Provide a high-level overview of this career trajectory..."
                 />
+                {errors.description && <p className="text-red-500 text-xs mt-1 font-bold">{errors.description.message}</p>}
               </div>
             </div>
 
             {/* Path Roadmap */}
             <div>
               <div className="flex justify-between items-center mb-6">
-                <h2 className="text-xl font-bold text-white uppercase">Path Roadmap</h2>
+                <h2 className="text-xl font-bold text-foreground uppercase">Path Roadmap</h2>
                 <button 
                   type="button"
                   onClick={() => {
@@ -358,7 +369,7 @@ export const CareerPathBuilderPage = () => {
                     setExpandedLevels(prev => ({ ...prev, [newIndex]: true }));
                     setActiveLevelIndex(newIndex);
                   }}
-                  className="flex items-center text-amber-400 font-bold text-sm hover:text-amber-300"
+                  className="flex items-center text-primary font-bold text-sm hover:opacity-85"
                 >
                   <Plus className="w-4 h-4 mr-1" /> Add Level
                 </button>
@@ -377,8 +388,8 @@ export const CareerPathBuilderPage = () => {
                         onClick={() => setActiveLevelIndex(index)}
                         className={`w-10 h-10 shrink-0 font-extrabold flex items-center justify-center rounded transition-colors ${
                           isActive 
-                            ? 'bg-amber-400 text-black border-2 border-amber-400 shadow-lg shadow-amber-400/20' 
-                            : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
+                            ? 'bg-primary text-primary-foreground border-2 border-primary shadow-lg shadow-primary/20' 
+                            : 'bg-muted text-muted-foreground border border-border hover:bg-accent'
                         }`}
                         title="Click to select this level for skills assignment"
                       >
@@ -386,21 +397,21 @@ export const CareerPathBuilderPage = () => {
                       </button>
 
                       {/* Accordion Block */}
-                      <div className={`flex-1 bg-[#1a1a1c] rounded-xl border transition-all ${
-                        isActive ? 'border-amber-400/50 shadow-md' : 'border-slate-800'
+                      <div className={`flex-1 bg-card rounded-xl border transition-all ${
+                        isActive ? 'border-primary/50 shadow-md' : 'border-border'
                       } overflow-hidden`}>
                         <div 
                           onClick={() => toggleLevelExpand(index)}
-                          className="p-4 flex justify-between items-center cursor-pointer bg-[#0f0f11] hover:bg-slate-800 transition"
+                          className="p-4 flex justify-between items-center cursor-pointer bg-card hover:bg-muted/40 transition"
                         >
                           <div className="flex items-center gap-4 w-full">
                             <input 
                               {...register(`levels.${index}.name`)}
                               onClick={(e) => e.stopPropagation()} // Stop accordion toggling when editing title
-                              className="font-bold text-lg text-white bg-transparent outline-none border-b border-transparent focus:border-amber-400 w-1/2"
+                              className="font-bold text-lg text-foreground bg-transparent outline-none border-b border-transparent focus:border-primary w-1/2"
                             />
                             {isActive && (
-                              <span className="text-[10px] bg-amber-400/20 text-amber-400 font-extrabold px-2 py-0.5 rounded border border-amber-400/30 uppercase">
+                              <span className="text-[10px] bg-primary/20 text-primary font-extrabold px-2 py-0.5 rounded border border-primary/30 uppercase">
                                 Active Target
                               </span>
                             )}
@@ -415,29 +426,29 @@ export const CareerPathBuilderPage = () => {
                                   setActiveLevelIndex(Math.max(0, index - 1));
                                 }
                               }}
-                              className="text-slate-500 hover:text-red-400 p-1 rounded transition"
+                              className="text-muted-foreground hover:text-destructive p-1 rounded transition"
                               title="Delete Level"
                             >
                               <Trash2 className="w-4 h-4" />
                             </button>
                             {isExpanded ? (
-                              <ChevronUp className="w-5 h-5 text-amber-400" />
+                              <ChevronUp className="w-5 h-5 text-primary" />
                             ) : (
-                              <ChevronDown className="w-5 h-5 text-amber-400" />
+                              <ChevronDown className="w-5 h-5 text-primary" />
                             )}
                           </div>
                         </div>
                         
                         {isExpanded && (
-                          <div className="p-6 border-t border-slate-800/80 space-y-6">
+                          <div className="p-6 border-t border-border/80 space-y-6">
                             
                             {/* Required Skills */}
                             <div>
-                              <p className="text-xs font-bold text-slate-400 uppercase mb-3">Required Skills</p>
+                              <p className="text-xs font-bold text-muted-foreground uppercase mb-3">Required Skills</p>
                               <div 
                                 onClick={() => setActiveLevelIndex(index)}
-                                className={`flex flex-wrap gap-2 p-3 bg-[#0a0a0b] border rounded min-h-[60px] cursor-pointer transition ${
-                                  isActive ? 'border-amber-400/30' : 'border-slate-800'
+                                className={`flex flex-wrap gap-2 p-3 bg-background border rounded min-h-[60px] cursor-pointer transition ${
+                                  isActive ? 'border-primary/30' : 'border-border'
                                 }`}
                               >
                                 {((watchedLevels[index]?.requiredSkills || []) as string[]).map((skillId) => {
@@ -445,7 +456,7 @@ export const CareerPathBuilderPage = () => {
                                   return (
                                     <span 
                                       key={skillId} 
-                                      className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-400/10 border border-amber-400/30 rounded text-sm font-semibold text-amber-400"
+                                      className="inline-flex items-center gap-1.5 px-3 py-1 bg-primary/10 border border-primary/30 rounded text-sm font-semibold text-primary"
                                     >
                                       {skillObj?.name || 'Loading skill...'}
                                       <button 
@@ -454,7 +465,7 @@ export const CareerPathBuilderPage = () => {
                                           e.stopPropagation();
                                           handleRemoveSkill(index, skillId);
                                         }}
-                                        className="hover:text-amber-200 transition"
+                                        className="hover:opacity-80 transition"
                                       >
                                         <X className="w-3 h-3" />
                                       </button>
@@ -462,7 +473,7 @@ export const CareerPathBuilderPage = () => {
                                   );
                                 })}
                                 {((watchedLevels[index]?.requiredSkills || []) as string[]).length === 0 && (
-                                  <span className="text-xs text-slate-500 font-medium self-center">
+                                  <span className="text-xs text-muted-foreground font-medium self-center">
                                     Click any skills on the library panel to add
                                   </span>
                                 )}
@@ -471,15 +482,15 @@ export const CareerPathBuilderPage = () => {
 
                             {/* Competency Standards */}
                             <div>
-                              <p className="text-xs font-bold text-slate-400 uppercase mb-3">Competency Standards</p>
+                              <p className="text-xs font-bold text-muted-foreground uppercase mb-3">Competency Standards</p>
                               <div className="space-y-3">
                                 {((watchedLevels[index]?.competencies || []) as string[]).map((competency, compIdx) => (
-                                  <div key={compIdx} className="flex items-center justify-between p-3 bg-[#0a0a0b] border border-slate-800 rounded">
-                                    <span className="text-sm font-semibold text-slate-200">{competency}</span>
+                                  <div key={compIdx} className="flex items-center justify-between p-3 bg-background border border-border rounded">
+                                    <span className="text-sm font-semibold text-foreground">{competency}</span>
                                     <button 
                                       type="button"
                                       onClick={() => handleRemoveCompetency(index, compIdx)}
-                                      className="text-slate-500 hover:text-red-400 transition"
+                                      className="text-muted-foreground hover:text-destructive transition"
                                     >
                                       <Trash2 className="w-4 h-4" />
                                     </button>
@@ -490,7 +501,7 @@ export const CareerPathBuilderPage = () => {
                                   <input 
                                     value={newCompetencies[index] || ''}
                                     onChange={(e) => setNewCompetencies(prev => ({ ...prev, [index]: e.target.value }))}
-                                    className="flex-1 bg-[#0a0a0b] border border-slate-700 rounded p-2 text-sm text-white focus:outline-none focus:border-amber-400"
+                                    className="flex-1 bg-background border border-input rounded p-2 text-sm text-foreground focus:outline-none focus:border-primary"
                                     placeholder="Add competency expectation..."
                                     onKeyDown={(e) => {
                                       if (e.key === 'Enter') {
@@ -502,7 +513,7 @@ export const CareerPathBuilderPage = () => {
                                   <button 
                                     type="button"
                                     onClick={() => handleAddCompetency(index)}
-                                    className="px-4 bg-slate-800 text-amber-400 font-bold border border-slate-700 hover:bg-slate-700 rounded text-sm transition"
+                                    className="px-4 bg-secondary text-primary font-bold border border-border hover:bg-secondary/80 rounded text-sm transition"
                                   >
                                     Add
                                   </button>
@@ -512,22 +523,22 @@ export const CareerPathBuilderPage = () => {
 
                             {/* Learning Resources */}
                             <div>
-                              <p className="text-xs font-bold text-slate-400 uppercase mb-3">Learning Resources</p>
+                              <p className="text-xs font-bold text-muted-foreground uppercase mb-3">Learning Resources</p>
                               <div className="space-y-3">
                                 {((watchedLevels[index]?.learningResources || []) as any[]).map((resource, resIdx) => (
-                                  <div key={resIdx} className="flex items-center justify-between p-3 bg-[#0a0a0b] border border-slate-800 rounded">
+                                  <div key={resIdx} className="flex items-center justify-between p-3 bg-background border border-border rounded">
                                     <div>
-                                      <span className="text-xs font-extrabold text-amber-400 uppercase mr-2 tracking-wide">
+                                      <span className="text-xs font-extrabold text-primary bg-primary/5 border border-primary/10 px-1.5 py-0.5 rounded mr-2 tracking-wide">
                                         {resource.type}
                                       </span>
-                                      <a href={resource.url} target="_blank" rel="noreferrer" className="text-sm font-bold text-slate-200 hover:text-white underline">
+                                      <a href={resource.url} target="_blank" rel="noreferrer" className="text-sm font-bold text-card-foreground hover:text-foreground underline">
                                         {resource.title}
                                       </a>
                                     </div>
                                     <button 
                                       type="button"
                                       onClick={() => handleRemoveResource(index, resIdx)}
-                                      className="text-slate-500 hover:text-red-400 transition"
+                                      className="text-muted-foreground hover:text-destructive transition"
                                     >
                                       <Trash2 className="w-4 h-4" />
                                     </button>
@@ -535,19 +546,19 @@ export const CareerPathBuilderPage = () => {
                                 ))}
 
                                 {/* Add Resource fields */}
-                                <div className="bg-[#0a0a0b] border border-slate-800 rounded p-4 space-y-3">
-                                  <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Attach Resource</p>
+                                <div className="bg-background border border-border rounded p-4 space-y-3">
+                                  <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Attach Resource</p>
                                   <div className="grid grid-cols-2 gap-3">
                                     <input 
                                       value={newResourceTitles[index] || ''}
                                       onChange={(e) => setNewResourceTitles(prev => ({ ...prev, [index]: e.target.value }))}
-                                      className="bg-transparent border-b border-slate-700 p-2 text-sm text-white focus:outline-none focus:border-amber-400"
+                                      className="bg-transparent border-b border-input p-2 text-sm text-foreground focus:outline-none focus:border-primary"
                                       placeholder="Resource Title (e.g. React Docs)"
                                     />
                                     <input 
                                       value={newResourceUrls[index] || ''}
                                       onChange={(e) => setNewResourceUrls(prev => ({ ...prev, [index]: e.target.value }))}
-                                      className="bg-transparent border-b border-slate-700 p-2 text-sm text-white focus:outline-none focus:border-amber-400"
+                                      className="bg-transparent border-b border-input p-2 text-sm text-foreground focus:outline-none focus:border-primary"
                                       placeholder="URL (e.g. https://react.dev)"
                                     />
                                   </div>
@@ -555,7 +566,7 @@ export const CareerPathBuilderPage = () => {
                                     <select 
                                       value={newResourceTypes[index] || 'EXTERNAL DOC'}
                                       onChange={(e) => setNewResourceTypes(prev => ({ ...prev, [index]: e.target.value }))}
-                                      className="bg-slate-900 border border-slate-800 rounded p-1.5 text-xs font-bold text-slate-300 focus:outline-none"
+                                      className="bg-card border border-border rounded p-1.5 text-xs font-bold text-foreground focus:outline-none"
                                     >
                                       <option value="INTERNAL COURSE">INTERNAL COURSE</option>
                                       <option value="EXTERNAL DOC">EXTERNAL DOC</option>
@@ -564,7 +575,7 @@ export const CareerPathBuilderPage = () => {
                                     <button 
                                       type="button"
                                       onClick={() => handleAddResource(index)}
-                                      className="flex items-center text-xs font-bold text-amber-400 hover:text-amber-300"
+                                      className="flex items-center text-xs font-bold text-primary hover:text-primary/80"
                                     >
                                       <Plus className="w-3.5 h-3.5 mr-1" /> Attach Link
                                     </button>
@@ -581,7 +592,7 @@ export const CareerPathBuilderPage = () => {
                 })}
 
                 {levels.length === 0 && (
-                  <div className="p-8 text-center bg-[#0f0f11] rounded-xl border border-slate-800 border-dashed text-slate-500 font-semibold">
+                  <div className="p-8 text-center bg-card rounded-xl border border-border border-dashed text-muted-foreground font-semibold">
                     No levels configured yet. Click "Add Level" to start outlining your path.
                   </div>
                 )}
@@ -593,21 +604,21 @@ export const CareerPathBuilderPage = () => {
           <div className="space-y-8">
             
             {/* Skill Library */}
-            <div className="bg-amber-400 rounded-xl p-1 shadow-xl">
-              <div className="bg-[#0f0f11] rounded-lg p-6 h-full border border-slate-950">
-                <h2 className="text-xl font-bold text-white uppercase mb-1">Skill Library</h2>
-                <p className="text-xs text-slate-400 font-semibold mb-6 flex items-center gap-1.5">
-                  <Info className="w-3.5 h-3.5 text-amber-400" />
+            <div className="bg-primary rounded-xl p-1 shadow-xl">
+              <div className="bg-card rounded-lg p-6 h-full border border-border">
+                <h2 className="text-xl font-bold text-foreground uppercase mb-1">Skill Library</h2>
+                <p className="text-xs text-muted-foreground font-semibold mb-6 flex items-center gap-1.5">
+                  <Info className="w-3.5 h-3.5 text-primary" />
                   Select a Level index (left) then click skill below to assign
                 </p>
                 
                 <div className="relative mb-6">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 w-4 h-4" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground w-4 h-4" />
                   <input 
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Search global skills..."
-                    className="w-full bg-[#0a0a0b] border border-slate-800 rounded py-3 pl-10 pr-4 text-sm text-white focus:outline-none focus:border-amber-400 placeholder:text-slate-600"
+                    className="w-full bg-background border border-border rounded py-3 pl-10 pr-4 text-sm text-foreground focus:outline-none focus:border-primary placeholder:text-muted-foreground"
                   />
                 </div>
 
@@ -618,7 +629,7 @@ export const CareerPathBuilderPage = () => {
 
                     return (
                       <div key={category}>
-                        <h3 className="text-xs font-bold text-amber-400 uppercase tracking-wider mb-3">
+                        <h3 className="text-xs font-bold text-primary uppercase tracking-wider mb-3">
                           {category}
                         </h3>
                         <div className="flex flex-wrap gap-2">
@@ -627,7 +638,7 @@ export const CareerPathBuilderPage = () => {
                               key={skill._id}
                               type="button"
                               onClick={() => handleAddSkillToActiveLevel(skill._id)}
-                              className="px-3 py-1.5 bg-[#1a1a1c] border border-slate-800/80 hover:border-amber-400/50 hover:bg-slate-800 text-sm font-semibold text-slate-200 rounded transition cursor-pointer select-none"
+                              className="px-3 py-1.5 bg-background border border-border hover:border-primary/50 hover:bg-muted text-sm font-semibold text-foreground rounded transition cursor-pointer select-none"
                             >
                               {skill.name}
                             </button>
@@ -637,27 +648,27 @@ export const CareerPathBuilderPage = () => {
                     );
                   })}
                   {filteredSkills.length === 0 && (
-                    <p className="text-xs text-slate-600 font-semibold text-center py-4">No matching skills found.</p>
+                    <p className="text-xs text-muted-foreground font-semibold text-center py-4">No matching skills found.</p>
                   )}
                 </div>
               </div>
             </div>
 
             {/* Path Overview */}
-            <div className="bg-[#0f0f11] rounded-xl border border-slate-800 p-6 shadow-lg">
-              <h2 className="text-lg font-bold text-white uppercase mb-6">Path Overview</h2>
+            <div className="bg-card rounded-xl border border-border p-6 shadow-lg">
+              <h2 className="text-lg font-bold text-foreground uppercase mb-6">Path Overview</h2>
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <span className="text-slate-400 font-bold text-sm uppercase">Total Levels:</span>
-                  <span className="text-amber-400 font-extrabold">{totalLevels} Levels</span>
+                  <span className="text-muted-foreground font-bold text-sm uppercase">Total Levels:</span>
+                  <span className="text-primary font-extrabold">{totalLevels} Levels</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-slate-400 font-bold text-sm uppercase">Est. Duration:</span>
-                  <span className="text-amber-400 font-extrabold">{estDuration}</span>
+                  <span className="text-muted-foreground font-bold text-sm uppercase">Est. Duration:</span>
+                  <span className="text-primary font-extrabold">{estDuration}</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-slate-400 font-bold text-sm uppercase">Difficulty:</span>
-                  <div className="flex text-amber-400 gap-0.5">
+                  <span className="text-muted-foreground font-bold text-sm uppercase">Difficulty:</span>
+                  <div className="flex text-primary gap-0.5">
                     {Array.from({ length: 5 }).map((_, idx) => (
                       <Star 
                         key={idx} 

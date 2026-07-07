@@ -223,7 +223,7 @@ export const AdminSkillsPage = () => {
       key: 'slug', 
       header: 'Slug',
       render: (item: Skill) => (
-        <span className="font-mono text-xs text-amber-400 bg-amber-400/5 px-2 py-1 rounded border border-amber-400/10">
+        <span className="font-mono text-xs text-primary bg-primary/5 px-2 py-1 rounded border border-primary/10">
           {item.slug}
         </span>
       )
@@ -232,7 +232,7 @@ export const AdminSkillsPage = () => {
       key: 'description', 
       header: 'Description',
       render: (item: Skill) => (
-        <span className="truncate max-w-md block text-slate-400" title={item.description || ''}>
+        <span className="truncate max-w-md block text-muted-foreground" title={item.description || ''}>
           {item.description || '-'}
         </span>
       )
@@ -240,13 +240,13 @@ export const AdminSkillsPage = () => {
   ];
 
   return (
-    <div className="p-8 max-w-7xl mx-auto space-y-8 text-slate-200">
+    <div className="p-8 max-w-7xl mx-auto space-y-8 text-foreground">
       <div>
-        <p className="text-sm font-bold text-slate-400 uppercase tracking-wide mb-1">
+        <p className="text-sm font-bold text-muted-foreground uppercase tracking-wide mb-1">
           Admin &gt; Skill Library
         </p>
-        <h1 className="text-3xl font-extrabold text-white uppercase">Skills Management</h1>
-        <p className="text-sm text-slate-400 mt-1">Manage global learning skills, definitions, and categories.</p>
+        <h1 className="text-3xl font-extrabold text-foreground uppercase">Skills Management</h1>
+        <p className="text-sm text-muted-foreground mt-1">Manage global learning skills, definitions, and categories.</p>
       </div>
 
       <DataTable
@@ -275,58 +275,58 @@ export const AdminSkillsPage = () => {
       {/* Edit/Create Dialog Overlay */}
       {editModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-          <div className="w-full max-w-lg bg-[#0f0f11] border border-slate-800 rounded-xl p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+          <div className="w-full max-w-lg bg-card border border-border rounded-xl p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
             <button 
               onClick={() => setEditModalOpen(false)}
-              className="absolute right-4 top-4 text-slate-400 hover:text-white transition"
+              className="absolute right-4 top-4 text-muted-foreground hover:text-foreground transition"
             >
               <X className="w-5 h-5" />
             </button>
             
-            <h2 className="text-xl font-extrabold text-white mb-6 uppercase">
+            <h2 className="text-xl font-extrabold text-foreground mb-6 uppercase">
               {modalMode === 'create' ? 'Add New Skill' : 'Edit Skill'}
             </h2>
             
             <form onSubmit={handleSaveSkill} className="space-y-6">
               <div>
-                <label className="block text-xs font-bold text-slate-400 uppercase mb-2">Skill Name</label>
+                <label className="block text-xs font-bold text-muted-foreground uppercase mb-2">Skill Name</label>
                 <input 
                   value={skillName}
                   onChange={(e) => setSkillName(e.target.value)}
-                  className="w-full bg-[#0a0a0b] border border-slate-700 rounded p-3 text-white focus:outline-none focus:border-amber-400 text-sm"
+                  className="w-full bg-background border border-input rounded p-3 text-foreground focus:outline-none focus:border-primary text-sm"
                   placeholder="e.g. Docker, React Router"
                   required
                 />
               </div>
               
               <div>
-                <label className="block text-xs font-bold text-slate-400 uppercase mb-2">Description</label>
+                <label className="block text-xs font-bold text-muted-foreground uppercase mb-2">Description</label>
                 <textarea 
                   value={skillDescription}
                   onChange={(e) => setSkillDescription(e.target.value)}
-                  className="w-full bg-[#0a0a0b] border border-slate-700 rounded p-3 text-white focus:outline-none focus:border-amber-400 text-sm min-h-[90px]"
+                  className="w-full bg-background border border-input rounded p-3 text-foreground focus:outline-none focus:border-primary text-sm min-h-[90px]"
                   placeholder="Explain what this skill entails..."
                 />
               </div>
 
               {/* Linked Resources Integration (Only in Edit Mode) */}
               {modalMode === 'edit' && (
-                <div className="border-t border-slate-800 pt-5 space-y-4">
-                  <h3 className="text-xs font-bold text-amber-400 uppercase tracking-wide">Linked Learning Resources</h3>
+                <div className="border-t border-border pt-5 space-y-4">
+                  <h3 className="text-xs font-bold text-primary uppercase tracking-wide">Linked Learning Resources</h3>
                   
                   {/* Resources List */}
                   <div className="space-y-2 max-h-[160px] overflow-y-auto pr-1">
                     {skillResources.map((res) => (
-                      <div key={res._id} className="flex justify-between items-center bg-[#0a0a0b] border border-slate-800 p-2.5 rounded text-xs">
+                      <div key={res._id} className="flex justify-between items-center bg-background border border-border p-2.5 rounded text-xs">
                         <div className="overflow-hidden pr-2">
-                          <span className="text-[10px] font-bold text-amber-400 bg-amber-400/5 border border-amber-400/10 px-1.5 py-0.5 rounded mr-2 tracking-wide">
+                          <span className="text-[10px] font-bold text-primary bg-primary/5 border border-primary/10 px-1.5 py-0.5 rounded mr-2 tracking-wide">
                             {res.type}
                           </span>
                           <a 
                             href={res.url} 
                             target="_blank" 
                             rel="noreferrer" 
-                            className="font-bold text-slate-200 hover:text-white underline truncate block max-w-xs mt-1"
+                            className="font-bold text-card-foreground hover:text-foreground underline truncate block max-w-xs mt-1"
                           >
                             {res.title}
                           </a>
@@ -340,14 +340,14 @@ export const AdminSkillsPage = () => {
                               setResUrl(res.url);
                               setResType(res.type);
                             }}
-                            className="text-amber-400 hover:bg-slate-800 px-2 py-1 rounded transition text-[11px] font-bold"
+                            className="text-primary hover:bg-muted px-2 py-1 rounded transition text-[11px] font-bold"
                           >
                             Edit
                           </button>
                           <button 
                             type="button"
                             onClick={() => handleRemoveResource(res._id)}
-                            className="text-red-400 hover:bg-slate-800 px-2 py-1 rounded transition text-[11px] font-bold"
+                            className="text-destructive hover:bg-muted px-2 py-1 rounded transition text-[11px] font-bold"
                           >
                             Remove
                           </button>
@@ -355,13 +355,13 @@ export const AdminSkillsPage = () => {
                       </div>
                     ))}
                     {skillResources.length === 0 && (
-                      <p className="text-xs text-slate-500 font-semibold py-1">No learning resources linked to this skill yet.</p>
+                      <p className="text-xs text-muted-foreground font-semibold py-1">No learning resources linked to this skill yet.</p>
                     )}
                   </div>
 
                   {/* Resource Creation/Edit Form */}
-                  <div className="bg-[#0a0a0b] border border-slate-800 rounded p-4 space-y-3">
-                    <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
+                  <div className="bg-background border border-border rounded p-4 space-y-3">
+                    <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
                       {editingResId ? 'Modify Linked Resource' : 'Attach New Learning Resource'}
                     </p>
                     
@@ -369,13 +369,13 @@ export const AdminSkillsPage = () => {
                       <input 
                         value={resTitle}
                         onChange={(e) => setResTitle(e.target.value)}
-                        className="bg-transparent border-b border-slate-700 p-2 text-xs text-white focus:outline-none focus:border-amber-400"
+                        className="bg-transparent border-b border-input p-2 text-xs text-foreground focus:outline-none focus:border-primary"
                         placeholder="Resource Title (e.g. Guide)"
                       />
                       <input 
                         value={resUrl}
                         onChange={(e) => setResUrl(e.target.value)}
-                        className="bg-transparent border-b border-slate-700 p-2 text-xs text-white focus:outline-none focus:border-amber-400"
+                        className="bg-transparent border-b border-input p-2 text-xs text-foreground focus:outline-none focus:border-primary"
                         placeholder="URL (e.g. https://...)"
                       />
                     </div>
@@ -384,7 +384,7 @@ export const AdminSkillsPage = () => {
                       <select 
                         value={resType}
                         onChange={(e) => setResType(e.target.value)}
-                        className="bg-slate-900 border border-slate-850 rounded p-1.5 text-xs font-bold text-slate-300 focus:outline-none"
+                        className="bg-card border border-border rounded p-1.5 text-xs font-bold text-foreground focus:outline-none"
                       >
                         <option value="INTERNAL COURSE">INTERNAL COURSE</option>
                         <option value="EXTERNAL DOC">EXTERNAL DOC</option>
@@ -400,7 +400,7 @@ export const AdminSkillsPage = () => {
                               setResUrl('');
                               setResType('EXTERNAL DOC');
                             }}
-                            className="text-xs font-bold text-slate-400 hover:text-slate-200 transition"
+                            className="text-xs font-bold text-muted-foreground hover:text-foreground transition"
                           >
                             Cancel
                           </button>
@@ -409,7 +409,7 @@ export const AdminSkillsPage = () => {
                           type="button"
                           onClick={handleAddOrUpdateResource}
                           disabled={isSavingResource}
-                          className="text-xs font-extrabold text-amber-400 hover:text-amber-300 disabled:opacity-55"
+                          className="text-xs font-extrabold text-primary hover:text-primary/80 disabled:opacity-55"
                         >
                           {editingResId ? 'Update Link' : 'Attach Link'}
                         </button>
@@ -419,18 +419,18 @@ export const AdminSkillsPage = () => {
                 </div>
               )}
 
-              <div className="flex justify-end gap-3 pt-4 border-t border-slate-800">
+              <div className="flex justify-end gap-3 pt-4 border-t border-border">
                 <button 
                   type="button"
                   onClick={() => setEditModalOpen(false)}
-                  className="px-5 py-2.5 rounded border border-slate-700 text-slate-300 font-semibold text-sm hover:bg-slate-800 transition"
+                  className="px-5 py-2.5 rounded border border-input text-muted-foreground font-semibold text-sm hover:bg-muted transition"
                 >
                   Cancel
                 </button>
                 <button 
                   type="submit"
                   disabled={isSaving}
-                  className="px-5 py-2.5 rounded bg-amber-400 text-black font-extrabold text-sm hover:bg-amber-500 transition shadow-md disabled:opacity-55"
+                  className="px-5 py-2.5 rounded bg-primary text-primary-foreground font-extrabold text-sm hover:opacity-90 transition shadow-md disabled:opacity-55"
                 >
                   {isSaving ? 'Saving...' : 'Save Skill'}
                 </button>

@@ -21,6 +21,8 @@ import { AdminUsersPage } from '@/modules/admin/pages/AdminUsersPage';
 import { CareerPathBuilderPage } from '@/modules/admin/pages/CareerPathBuilderPage';
 import { CareerPathsPage } from '@/modules/admin/pages/CareerPathsPage';
 import { AdminResourcesPage } from '@/modules/admin/pages/AdminResourcesPage';
+import { AdminSettingsPage } from '@/modules/admin/pages/AdminSettingsPage';
+import { AdminSupportPage } from '@/modules/admin/pages/AdminSupportPage';
 
 function App() {
   return (
@@ -53,6 +55,8 @@ function App() {
         <Route path="resources" element={<AdminResourcesPage />} />
         <Route path="roadmaps" element={<AdminRoadmapsPage />} />
         <Route path="users" element={<AdminUsersPage />} />
+        <Route path="settings" element={<AdminSettingsPage />} />
+        <Route path="support" element={<AdminSupportPage />} />
         <Route index element={<Navigate to="career-paths" replace />} />
       </Route>
 
