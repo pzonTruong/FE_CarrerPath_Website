@@ -1,4 +1,5 @@
 import React from 'react';
+import { ExternalLink } from 'lucide-react';
 import type { ExternalResource } from '../types';
 
 interface ResourceCardProps {
@@ -11,21 +12,22 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({ resource }) => {
       href={resource.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="border border-dashed border-foreground/50 bg-muted/45 p-3 rounded-[2px] flex flex-col justify-between hover:bg-primary/5 hover:border-solid hover:border-primary transition-all duration-150 group/res"
+      className="border-2 border-foreground bg-card text-card-foreground p-4 rounded-lg flex flex-col justify-between hover:bg-muted shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_rgba(250,250,250,0.15)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:hover:shadow-[4px_4px_0px_0px_rgba(250,250,250,0.25)] hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all duration-150 group/res"
     >
       <div className="space-y-1">
-        <span className="text-[9px] font-mono text-muted-foreground uppercase tracking-wider block">
-          {resource.sourceName}
-        </span>
-        <h4 className="text-xs font-bold font-mono tracking-tight text-foreground group-hover/res:text-primary transition-colors">
+        <div className="flex items-center justify-between gap-2">
+          <span className="text-[9px] font-mono text-muted-foreground font-bold uppercase tracking-widest block truncate">
+            {resource.sourceName}
+          </span>
+          <ExternalLink className="size-3 text-muted-foreground group-hover/res:text-foreground transition-colors shrink-0" />
+        </div>
+        <h4 className="text-xs sm:text-sm font-bold font-sans tracking-wide text-foreground group-hover/res:text-primary transition-colors line-clamp-2 pt-1">
           {resource.title}
         </h4>
       </div>
-      <div className="mt-3 flex items-center gap-1 text-[10px] font-mono font-bold text-primary group-hover/res:underline">
+      <div className="mt-4 flex items-center gap-1 text-[10px] font-mono font-bold text-primary tracking-widest uppercase group-hover/res:underline">
         View Docs
-        <svg className="size-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-        </svg>
+        <span className="text-xs transition-transform duration-250 group-hover/res:translate-x-0.5">&gt;</span>
       </div>
     </a>
   );

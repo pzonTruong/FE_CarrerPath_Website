@@ -31,7 +31,6 @@ function App() {
         {/* Public routes */}
         <Route path="/" element={<HomePage />} />
         <Route path="/roadmap" element={<RoadmapPage />} />
-        <Route path="/roadmap/:careerId" element={<RoadmapDetailPage />} />
         <Route path="/features" element={<FeaturePage />} />
         <Route path="/contact" element={<ContactPage />} />
 
@@ -44,6 +43,7 @@ function App() {
         <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
         <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
       </Route>
+      <Route path="/roadmap/:careerId" element={<RoadmapDetailPage />} />
       <Route path="/quiz/:skillId" element={<ProtectedRoute><QuizPage /></ProtectedRoute>} />
       
       {/* Admin routes */}
