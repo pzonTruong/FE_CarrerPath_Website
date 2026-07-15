@@ -91,6 +91,18 @@
   --sidebar-border: hsl(0 0% 25%);
 }
 
+.theme-logo-dark {
+  display: none;
+}
+
+.dark .theme-logo-light {
+  display: none;
+}
+
+.dark .theme-logo-dark {
+  display: block;
+}
+
 * {
   border-color: var(--color-border);
 }

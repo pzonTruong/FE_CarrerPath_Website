@@ -13,6 +13,7 @@ import { FeaturePage } from '@/modules/features/pages/FeaturePage';
 import { ContactPage } from '@/modules/contact/pages/ContactPage';
 import { DashboardPage } from '@/modules/dashboard/pages/DashboardPage';
 import { QuizPage } from '@/modules/quiz/pages/QuizPage';
+import { QuizHistoryPage } from '@/modules/quiz/pages/QuizHistoryPage';
 import { AdminRoute } from '@/modules/admin/components/AdminRoute';
 import { AdminLayout } from '@/modules/admin/pages/AdminLayout';
 import { AdminSkillsPage } from '@/modules/admin/pages/AdminSkillsPage';
@@ -33,6 +34,7 @@ function App() {
         <Route path="/roadmap" element={<RoadmapPage />} />
         <Route path="/features" element={<FeaturePage />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/roadmap/:careerId" element={<RoadmapDetailPage />} />
 
         {/* Auth routes under AppLayout */}
         <Route path="/login" element={<LoginPage />} />
@@ -42,9 +44,9 @@ function App() {
         {/* Protected routes */}
         <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
         <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+        <Route path="/quiz-history" element={<ProtectedRoute><QuizHistoryPage /></ProtectedRoute>} />
+        <Route path="/quiz/:skillId" element={<ProtectedRoute><QuizPage /></ProtectedRoute>} />
       </Route>
-      <Route path="/roadmap/:careerId" element={<RoadmapDetailPage />} />
-      <Route path="/quiz/:skillId" element={<ProtectedRoute><QuizPage /></ProtectedRoute>} />
       
       {/* Admin routes */}
       <Route path="/admin" element={<AdminRoute><AdminLayout /></AdminRoute>}>
