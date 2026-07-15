@@ -11,6 +11,8 @@ export interface CurrentUser {
   bio?: string;
   avatarUrl?: string;
   phone?: string;
+  cvUrl?: string;
+  cvName?: string;
   role?: string;
   createdAt: string;
   updatedAt: string;

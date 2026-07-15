@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { authApi } from '@/modules/auth/api/auth.api';
 import { tokenStore } from '@/modules/auth/store/token.store';
 import { AvatarUpload } from '@/modules/profile/components/AvatarUpload';
+import { CvUpload } from '@/modules/profile/components/CvUpload';
 import { PortfolioManager } from '@/modules/profile/components/PortfolioManager';
 import { ProfileEditForm } from '@/modules/profile/components/ProfileEditForm';
 import type { PortfolioItem } from '@/modules/profile/api/profile.api';
@@ -112,6 +113,13 @@ export const ProfilePage = () => {
               <p className="text-sm text-muted-foreground font-mono">{user?.email ?? '-'}</p>
             </div>
           </Card>
+
+          <CvUpload
+            currentCvUrl={user?.cvUrl}
+            currentCvName={user?.cvName}
+            onUploadSuccess={(url, name) => setUser((prev) => prev ? { ...prev, cvUrl: url, cvName: name } : prev)}
+            onDeleteSuccess={() => setUser((prev) => prev ? { ...prev, cvUrl: undefined, cvName: undefined } : prev)}
+          />
 
           <Card className="p-6 border-2 border-foreground bg-card text-card-foreground rounded-[4px] shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(250,250,250,0.15)]">
             <CardHeader className="p-0 pb-4 border-b border-foreground/10 mb-4">

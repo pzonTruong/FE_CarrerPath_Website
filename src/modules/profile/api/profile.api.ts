@@ -41,4 +41,12 @@ export const profileApi = {
     });
   },
   deletePortfolio: (portfolioId: string) => http.delete(`/profile/portfolios/${portfolioId}`),
+  uploadCv: (file: File) => {
+    const formData = new FormData();
+    formData.append('cv', file);
+    return http.post('/profile/cv', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+  },
+  deleteCv: () => http.delete('/profile/cv'),
 };

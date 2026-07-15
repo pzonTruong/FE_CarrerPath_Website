@@ -5,6 +5,7 @@ import { profileApi, type PortfolioItem } from '@/modules/profile/api/profile.ap
 import { Button } from '@/shared/components/ui/button';
 import { Input } from '@/shared/components/ui/input';
 import { Label } from '@/shared/components/ui/label';
+import { handlePdfPreview } from '@/shared/lib/utils';
 import {
   Dialog,
   DialogContent,
@@ -484,6 +485,7 @@ export const PortfolioManager = ({ items, onChange }: PortfolioManagerProps) => 
           items.map((item) => {
             const fileName = normalizeFileName(item.fileName);
             const isImage = item.fileMimeType?.startsWith('image/') || /\.(jpg|jpeg|png|webp|gif)$/i.test(item.fileUrl ?? '');
+            const isPdf = item.fileMimeType === 'application/pdf' || /\.pdf$/i.test(item.fileUrl ?? '') || fileName?.toLowerCase().endsWith('.pdf');
 
             return (
               <div
@@ -526,6 +528,18 @@ export const PortfolioManager = ({ items, onChange }: PortfolioManagerProps) => 
                             onClick={() => setPreviewImage({ url: item.fileUrl!, title: item.title })}
                           >
                             {fileName ?? 'Uploaded file'} <Eye className="size-3" />
+                          </button>
+                        ) : isPdf ? (
+                          <button
+                            type="button"
+                            className="inline-flex items-center gap-1 hover:text-primary hover:underline cursor-pointer text-left font-normal border-none bg-transparent p-0 text-muted-foreground font-mono"
+                            onClick={async () => {
+                              if (item.fileUrl) {
+                                await handlePdfPreview(item.fileUrl);
+                              }
+                            }}
+                          >
+                            {fileName ?? 'Uploaded file'} <ExternalLink className="size-3" />
                           </button>
                         ) : (
                           <a
