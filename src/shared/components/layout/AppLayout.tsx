@@ -5,9 +5,11 @@ import { authApi } from '@/modules/auth/api/auth.api';
 import { tokenStore } from '@/modules/auth/store/token.store';
 import { Avatar, AvatarFallback, AvatarImage } from '@/shared/components/ui/avatar';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator } from '@/shared/components/ui/dropdown-menu';
-import { LogOut, User as UserIcon, LayoutDashboard, ShieldAlert } from 'lucide-react';
+import { LogOut, User as UserIcon, LayoutDashboard, ShieldAlert, ClipboardList } from 'lucide-react';
 import { cn } from '@/shared/lib/utils';
 import type { CurrentUser } from '@/modules/auth/types/auth.types';
+import logoLight from '@/assets/brand/roadmap-logo-light.png';
+import logoDark from '@/assets/brand/roadmap-logo-dark.png';
 
 export const AppLayout = () => {
   const [user, setUser] = useState<CurrentUser | null>(null);
@@ -43,6 +45,13 @@ export const AppLayout = () => {
 
   const isGuest = !user;
 
+  const LogoMark = ({ className }: { className?: string }) => (
+    <span className={cn('relative inline-flex shrink-0 overflow-hidden', className)}>
+      <img src={logoLight} alt="" className="theme-logo-light h-full w-full object-contain" />
+      <img src={logoDark} alt="" className="theme-logo-dark h-full w-full object-contain" />
+    </span>
+  );
+
   const clientNavItems = [
     { to: '/', label: 'Home' },
     { to: '/roadmap', label: 'Roadmaps' },
@@ -53,6 +62,7 @@ export const AppLayout = () => {
   const accountNavItems: { to: string; label: string; icon: React.ReactNode }[] = [];
   if (!isGuest) {
     accountNavItems.push({ to: '/dashboard', label: 'Dashboard', icon: <LayoutDashboard className="w-4 h-4 mr-2" /> });
+    accountNavItems.push({ to: '/quiz-history', label: 'Quiz Review', icon: <ClipboardList className="w-4 h-4 mr-2" /> });
     accountNavItems.push({ to: '/profile', label: 'Profile', icon: <UserIcon className="w-4 h-4 mr-2" /> });
     if (user?.role === 'Admin') {
       accountNavItems.push({ to: '/admin', label: 'Admin', icon: <ShieldAlert className="w-4 h-4 mr-2" /> });
@@ -66,11 +76,15 @@ export const AppLayout = () => {
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
           {/* Logo & Client Links */}
           <div className="flex items-center gap-6">
-            <Link to="/" className="flex items-center gap-2 text-sm font-extrabold tracking-wider uppercase">
-              <span className="bg-primary text-primary-foreground px-2 py-1 border border-foreground rounded-[2px] font-mono">
-                PATH
+            <Link
+              to="/"
+              aria-label="roadmap.dev home"
+              className="flex items-center gap-2.5 text-sm font-extrabold tracking-wider uppercase"
+            >
+              <LogoMark className="size-10" />
+              <span className="hidden sm:inline font-mono leading-none">
+                roadmap<span className="text-primary">.dev</span>
               </span>
-              <span className="hidden sm:inline font-mono">roadmap.dev</span>
             </Link>
 
             <nav className="hidden md:flex items-center gap-1">
@@ -170,7 +184,10 @@ export const AppLayout = () => {
       <footer className="border-t-2 border-foreground bg-card text-card-foreground py-8 mt-auto">
         <div className="mx-auto max-w-6xl px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex flex-col items-center sm:items-start">
-            <p className="text-sm font-mono font-bold">roadmap.dev</p>
+            <Link to="/" aria-label="roadmap.dev home" className="flex items-center gap-2 text-sm font-mono font-bold">
+              <LogoMark className="size-8" />
+              <span>roadmap<span className="text-primary">.dev</span></span>
+            </Link>
             <p className="text-xs text-muted-foreground mt-1">
               Developer-centric paths to coding mastery. REDESIGNED.
             </p>
