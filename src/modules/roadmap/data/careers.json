@@ -3,6 +3,11 @@
     "id": "frontend",
     "careerTitle": "Frontend Developer",
     "description": "Learn to structure, style, and build highly interactive, modern client-side web interfaces.",
+    "category": "Engineering",
+    "difficulty": "Beginner",
+    "duration": "10-12 weeks",
+    "outcome": "Responsive React portfolio",
+    "portfolioOutcome": "A responsive React app with routing, API integration, and polished UI states.",
     "skills": ["HTML", "CSS", "JavaScript", "Tailwind CSS", "TypeScript", "Vite", "React", "Zustand"],
     "roadmapSteps": [
       {
@@ -115,6 +120,11 @@
     "id": "backend",
     "careerTitle": "Backend Developer",
     "description": "Learn to design APIs, structure relational/non-relational databases, write business logic, and handle scaling.",
+    "category": "Engineering",
+    "difficulty": "Intermediate",
+    "duration": "12-14 weeks",
+    "outcome": "Secure production API",
+    "portfolioOutcome": "A documented REST API with authentication, database models, tests, and deployment notes.",
     "skills": ["Node.js", "Express", "PostgreSQL", "MongoDB", "JWT Security", "Redis", "Jest", "Docker"],
     "roadmapSteps": [
       {
@@ -227,6 +237,11 @@
     "id": "devops",
     "careerTitle": "DevOps Engineer",
     "description": "Automate build pipelines, orchestrate container clusters, and manage cloud infrastructure reliably.",
+    "category": "Infrastructure",
+    "difficulty": "Advanced",
+    "duration": "14-16 weeks",
+    "outcome": "Cloud deployment pipeline",
+    "portfolioOutcome": "A containerized app with CI/CD, infrastructure notes, monitoring, and deployment runbook.",
     "skills": ["Linux", "Nginx", "Docker", "GitHub Actions", "Kubernetes", "Terraform", "AWS", "Prometheus"],
     "roadmapSteps": [
       {
@@ -330,6 +345,552 @@
             "title": "Prometheus Introduction Guide",
             "sourceName": "Prometheus.io Official Manual",
             "url": "https://prometheus.io/docs/introduction/overview/"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "fullstack",
+    "careerTitle": "Fullstack Developer",
+    "description": "Build complete web products by connecting polished frontend experiences with reliable backend services.",
+    "category": "Engineering",
+    "difficulty": "Intermediate",
+    "duration": "14-16 weeks",
+    "outcome": "End-to-end SaaS project",
+    "portfolioOutcome": "A deployed fullstack CRUD product with auth, dashboard, API, database, and responsive UI.",
+    "skills": ["React", "TypeScript", "Node.js", "Express", "MongoDB", "Authentication", "REST APIs", "Deployment"],
+    "roadmapSteps": [
+      {
+        "id": "fs-product-foundation",
+        "title": "1. Product Scope & User Flows",
+        "description": "Define product requirements, user roles, data entities, and the main workflows before coding.",
+        "subtopics": ["User stories", "Entity relationship mapping", "MVP feature scoping"],
+        "externalResources": [
+          {
+            "title": "Writing Good User Stories",
+            "sourceName": "Atlassian Agile Coach",
+            "url": "https://www.atlassian.com/agile/project-management/user-stories"
+          }
+        ]
+      },
+      {
+        "id": "fs-frontend-app",
+        "title": "2. React Application Architecture",
+        "description": "Create reusable pages, layouts, state containers, and form flows for a production-like frontend.",
+        "subtopics": ["Route structure", "Reusable components", "Form validation"],
+        "externalResources": [
+          {
+            "title": "React Learn",
+            "sourceName": "React.dev",
+            "url": "https://react.dev/learn"
+          }
+        ]
+      },
+      {
+        "id": "fs-backend-api",
+        "title": "3. API & Database Layer",
+        "description": "Design API endpoints, validation rules, database schemas, and error responses.",
+        "subtopics": ["REST endpoints", "Schema modeling", "Request validation"],
+        "externalResources": [
+          {
+            "title": "Express Routing",
+            "sourceName": "Express Docs",
+            "url": "https://expressjs.com/en/guide/routing.html"
+          }
+        ]
+      },
+      {
+        "id": "fs-auth-security",
+        "title": "4. Authentication & Protected Features",
+        "description": "Implement login, register, protected routes, token handling, and role-based permissions.",
+        "subtopics": ["JWT auth", "Protected routes", "Role checks"],
+        "externalResources": [
+          {
+            "title": "JWT Introduction",
+            "sourceName": "JWT.io",
+            "url": "https://jwt.io/introduction"
+          }
+        ]
+      },
+      {
+        "id": "fs-deploy-demo",
+        "title": "5. Deployment & Demo Readiness",
+        "description": "Deploy the app, prepare demo accounts, seed data, and document the end-to-end flow.",
+        "subtopics": ["Environment variables", "Seed data", "Demo script"],
+        "externalResources": [
+          {
+            "title": "Vercel Deployment Documentation",
+            "sourceName": "Vercel Docs",
+            "url": "https://vercel.com/docs"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "data-analyst",
+    "careerTitle": "Data Analyst",
+    "description": "Turn raw data into business insight using spreadsheets, SQL, dashboards, and storytelling.",
+    "category": "Data",
+    "difficulty": "Beginner",
+    "duration": "8-10 weeks",
+    "outcome": "Business insight dashboard",
+    "portfolioOutcome": "A dashboard case study with cleaned data, SQL queries, charts, and recommendations.",
+    "skills": ["Excel", "SQL", "Data Cleaning", "Statistics", "Power BI", "Tableau", "Data Storytelling"],
+    "roadmapSteps": [
+      {
+        "id": "da-spreadsheets",
+        "title": "1. Spreadsheet Analysis Foundations",
+        "description": "Clean, transform, summarize, and validate tabular data using spreadsheet workflows.",
+        "subtopics": ["Pivot tables", "Lookup formulas", "Data validation"],
+        "externalResources": [
+          {
+            "title": "Google Sheets Training",
+            "sourceName": "Google Workspace Learning Center",
+            "url": "https://support.google.com/a/users/answer/9282959"
+          }
+        ]
+      },
+      {
+        "id": "da-sql",
+        "title": "2. SQL for Analytics",
+        "description": "Query relational data using filters, joins, aggregations, and window functions.",
+        "subtopics": ["SELECT queries", "Joins and grouping", "Window functions"],
+        "externalResources": [
+          {
+            "title": "SQL Tutorial",
+            "sourceName": "Mode Analytics",
+            "url": "https://mode.com/sql-tutorial/"
+          }
+        ]
+      },
+      {
+        "id": "da-visualization",
+        "title": "3. Data Visualization Principles",
+        "description": "Choose clear chart types, design dashboards, and avoid misleading visual patterns.",
+        "subtopics": ["Chart selection", "Dashboard layout", "Data ink and clarity"],
+        "externalResources": [
+          {
+            "title": "Data Visualization Catalogue",
+            "sourceName": "Dataviz Catalogue",
+            "url": "https://datavizcatalogue.com/"
+          }
+        ]
+      },
+      {
+        "id": "da-business-insight",
+        "title": "4. Business Insight & Storytelling",
+        "description": "Convert analysis into recommendations with context, tradeoffs, and measurable impact.",
+        "subtopics": ["Insight framing", "Executive summary", "Recommendation writing"],
+        "externalResources": [
+          {
+            "title": "Storytelling with Data Blog",
+            "sourceName": "Storytelling with Data",
+            "url": "https://www.storytellingwithdata.com/blog"
+          }
+        ]
+      },
+      {
+        "id": "da-portfolio-case",
+        "title": "5. Portfolio Analytics Case Study",
+        "description": "Create a complete analytics case study with dataset, queries, dashboard, and final recommendations.",
+        "subtopics": ["Case study structure", "Dashboard publishing", "Insight presentation"],
+        "externalResources": [
+          {
+            "title": "Kaggle Datasets",
+            "sourceName": "Kaggle",
+            "url": "https://www.kaggle.com/datasets"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ui-ux",
+    "careerTitle": "UI/UX Designer",
+    "description": "Research user needs, design usable interfaces, prototype flows, and build consistent design systems.",
+    "category": "Design",
+    "difficulty": "Beginner",
+    "duration": "10-12 weeks",
+    "outcome": "Clickable product prototype",
+    "portfolioOutcome": "A UX case study with research notes, wireframes, high-fidelity screens, and prototype link.",
+    "skills": ["User Research", "Wireframing", "Figma", "Prototyping", "Design Systems", "Usability Testing"],
+    "roadmapSteps": [
+      {
+        "id": "ux-research",
+        "title": "1. User Research & Problem Discovery",
+        "description": "Understand user goals, pain points, contexts, and constraints before designing screens.",
+        "subtopics": ["Interview scripts", "Personas", "Problem statements"],
+        "externalResources": [
+          {
+            "title": "UX Research Cheat Sheet",
+            "sourceName": "Nielsen Norman Group",
+            "url": "https://www.nngroup.com/articles/ux-research-cheat-sheet/"
+          }
+        ]
+      },
+      {
+        "id": "ux-information-architecture",
+        "title": "2. Information Architecture & User Flows",
+        "description": "Map content, navigation, and task flows so users can complete goals efficiently.",
+        "subtopics": ["User journeys", "Navigation models", "Task flows"],
+        "externalResources": [
+          {
+            "title": "Information Architecture Basics",
+            "sourceName": "Usability.gov",
+            "url": "https://www.usability.gov/what-and-why/information-architecture.html"
+          }
+        ]
+      },
+      {
+        "id": "ux-wireframes",
+        "title": "3. Wireframing & Interaction Design",
+        "description": "Design low-fidelity screens that communicate layout, hierarchy, and interaction behavior.",
+        "subtopics": ["Layout hierarchy", "Interaction states", "Form flows"],
+        "externalResources": [
+          {
+            "title": "Wireframing Guide",
+            "sourceName": "Figma Resource Library",
+            "url": "https://www.figma.com/resource-library/what-is-wireframing/"
+          }
+        ]
+      },
+      {
+        "id": "ux-design-system",
+        "title": "4. Visual UI & Design Systems",
+        "description": "Create reusable components, tokens, color systems, and accessible UI patterns.",
+        "subtopics": ["Component libraries", "Color and typography", "Accessibility basics"],
+        "externalResources": [
+          {
+            "title": "Material Design Foundations",
+            "sourceName": "Material Design",
+            "url": "https://m3.material.io/foundations"
+          }
+        ]
+      },
+      {
+        "id": "ux-case-study",
+        "title": "5. Prototype & UX Case Study",
+        "description": "Build a clickable prototype and document the design process as a portfolio-ready case study.",
+        "subtopics": ["Clickable prototypes", "Usability test plan", "Case study writing"],
+        "externalResources": [
+          {
+            "title": "UX Case Study Guide",
+            "sourceName": "CareerFoundry",
+            "url": "https://careerfoundry.com/en/blog/ux-design/ux-case-study/"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "qa-engineer",
+    "careerTitle": "QA Engineer",
+    "description": "Plan test strategies, write test cases, automate regression checks, and protect product quality.",
+    "category": "Quality",
+    "difficulty": "Beginner",
+    "duration": "8-10 weeks",
+    "outcome": "Automated QA test suite",
+    "portfolioOutcome": "A QA portfolio with test plan, bug reports, automated tests, and quality summary.",
+    "skills": ["Test Cases", "Bug Reports", "Postman", "Playwright", "Jest", "Regression Testing", "QA Strategy"],
+    "roadmapSteps": [
+      {
+        "id": "qa-testing-mindset",
+        "title": "1. Testing Mindset & QA Process",
+        "description": "Learn how QA protects user outcomes through risk analysis, clear acceptance criteria, and test planning.",
+        "subtopics": ["Test planning", "Acceptance criteria", "Risk-based testing"],
+        "externalResources": [
+          {
+            "title": "Software Testing Basics",
+            "sourceName": "Guru99",
+            "url": "https://www.guru99.com/software-testing-introduction-importance.html"
+          }
+        ]
+      },
+      {
+        "id": "qa-test-cases",
+        "title": "2. Test Case Design",
+        "description": "Write clear manual test cases for happy paths, edge cases, validation rules, and negative flows.",
+        "subtopics": ["Boundary values", "Equivalence classes", "Negative testing"],
+        "externalResources": [
+          {
+            "title": "Test Case Design Techniques",
+            "sourceName": "BrowserStack Guide",
+            "url": "https://www.browserstack.com/guide/test-case-design-techniques"
+          }
+        ]
+      },
+      {
+        "id": "qa-api-testing",
+        "title": "3. API Testing with Postman",
+        "description": "Validate backend endpoints, request payloads, auth flows, and response contracts.",
+        "subtopics": ["Collections", "Environment variables", "API assertions"],
+        "externalResources": [
+          {
+            "title": "Postman Learning Center",
+            "sourceName": "Postman Docs",
+            "url": "https://learning.postman.com/"
+          }
+        ]
+      },
+      {
+        "id": "qa-automation",
+        "title": "4. UI Automation with Playwright",
+        "description": "Automate browser checks for critical user flows and run regression tests reliably.",
+        "subtopics": ["Selectors", "Assertions", "CI test runs"],
+        "externalResources": [
+          {
+            "title": "Playwright Documentation",
+            "sourceName": "Playwright",
+            "url": "https://playwright.dev/docs/intro"
+          }
+        ]
+      },
+      {
+        "id": "qa-reporting",
+        "title": "5. Bug Reporting & Quality Metrics",
+        "description": "Write actionable bug reports and summarize quality risks for developers and stakeholders.",
+        "subtopics": ["Bug reproduction", "Severity and priority", "QA summary reports"],
+        "externalResources": [
+          {
+            "title": "How to Write a Bug Report",
+            "sourceName": "Atlassian",
+            "url": "https://www.atlassian.com/agile/software-development/bug-report"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "product-manager",
+    "careerTitle": "Product Manager",
+    "description": "Discover user problems, prioritize roadmap decisions, align stakeholders, and measure product outcomes.",
+    "category": "Product",
+    "difficulty": "Intermediate",
+    "duration": "10-12 weeks",
+    "outcome": "Product strategy case study",
+    "portfolioOutcome": "A product case study with discovery notes, roadmap, metrics, and launch plan.",
+    "skills": ["User Discovery", "Prioritization", "Roadmapping", "Metrics", "Stakeholder Communication", "Product Strategy"],
+    "roadmapSteps": [
+      {
+        "id": "pm-discovery",
+        "title": "1. Product Discovery",
+        "description": "Identify valuable problems through user interviews, market signals, and product analytics.",
+        "subtopics": ["Problem framing", "User interviews", "Opportunity sizing"],
+        "externalResources": [
+          {
+            "title": "Continuous Discovery Habits",
+            "sourceName": "Product Talk",
+            "url": "https://www.producttalk.org/"
+          }
+        ]
+      },
+      {
+        "id": "pm-prioritization",
+        "title": "2. Prioritization Frameworks",
+        "description": "Choose what to build by balancing impact, confidence, effort, risk, and strategy.",
+        "subtopics": ["RICE scoring", "MoSCoW", "Tradeoff decisions"],
+        "externalResources": [
+          {
+            "title": "RICE Prioritization",
+            "sourceName": "Intercom",
+            "url": "https://www.intercom.com/blog/rice-simple-prioritization-for-product-managers/"
+          }
+        ]
+      },
+      {
+        "id": "pm-roadmap",
+        "title": "3. Roadmap Planning",
+        "description": "Translate product strategy into roadmap themes, releases, and measurable milestones.",
+        "subtopics": ["Outcome roadmaps", "Release planning", "Dependencies"],
+        "externalResources": [
+          {
+            "title": "Product Roadmap Guide",
+            "sourceName": "ProductPlan",
+            "url": "https://www.productplan.com/learn/product-roadmap/"
+          }
+        ]
+      },
+      {
+        "id": "pm-metrics",
+        "title": "4. Product Metrics & Experiments",
+        "description": "Define success metrics, read product funnels, and validate decisions with experiments.",
+        "subtopics": ["North star metric", "Funnels", "Experiment design"],
+        "externalResources": [
+          {
+            "title": "AARRR Metrics Framework",
+            "sourceName": "ProductPlan",
+            "url": "https://www.productplan.com/glossary/aarrr-framework/"
+          }
+        ]
+      },
+      {
+        "id": "pm-stakeholders",
+        "title": "5. Stakeholder Communication",
+        "description": "Write product briefs, align teams, handle tradeoffs, and communicate launch readiness.",
+        "subtopics": ["PRDs", "Launch notes", "Stakeholder updates"],
+        "externalResources": [
+          {
+            "title": "Product Requirements Document Guide",
+            "sourceName": "Atlassian",
+            "url": "https://www.atlassian.com/agile/product-management/requirements"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "mobile-developer",
+    "careerTitle": "Mobile Developer",
+    "description": "Build mobile applications with polished navigation, API integration, local storage, and release workflows.",
+    "category": "Engineering",
+    "difficulty": "Intermediate",
+    "duration": "12-14 weeks",
+    "outcome": "Published mobile app prototype",
+    "portfolioOutcome": "A mobile app prototype with authentication, API data, local persistence, and release notes.",
+    "skills": ["React Native", "Mobile UI", "Navigation", "API Integration", "Async Storage", "App Release"],
+    "roadmapSteps": [
+      {
+        "id": "mb-mobile-foundations",
+        "title": "1. Mobile App Foundations",
+        "description": "Understand mobile constraints, platform patterns, navigation, and touch-first interface expectations.",
+        "subtopics": ["Mobile UX patterns", "Platform differences", "Responsive app layouts"],
+        "externalResources": [
+          {
+            "title": "React Native Introduction",
+            "sourceName": "React Native Docs",
+            "url": "https://reactnative.dev/docs/getting-started"
+          }
+        ]
+      },
+      {
+        "id": "mb-navigation",
+        "title": "2. Navigation & Screen Architecture",
+        "description": "Structure app screens, tabs, stacks, route params, and protected navigation flows.",
+        "subtopics": ["Stack navigation", "Tabs", "Route params"],
+        "externalResources": [
+          {
+            "title": "React Navigation Docs",
+            "sourceName": "React Navigation",
+            "url": "https://reactnavigation.org/docs/getting-started"
+          }
+        ]
+      },
+      {
+        "id": "mb-api-state",
+        "title": "3. API Integration & App State",
+        "description": "Connect mobile screens to backend APIs, handle loading states, errors, and cached data.",
+        "subtopics": ["Fetch clients", "Loading states", "Offline-friendly state"],
+        "externalResources": [
+          {
+            "title": "Networking in React Native",
+            "sourceName": "React Native Docs",
+            "url": "https://reactnative.dev/docs/network"
+          }
+        ]
+      },
+      {
+        "id": "mb-device-features",
+        "title": "4. Device Features & Local Storage",
+        "description": "Use local storage, media picking, permissions, and device APIs safely.",
+        "subtopics": ["Async storage", "Permissions", "Media picker"],
+        "externalResources": [
+          {
+            "title": "Expo SDK Documentation",
+            "sourceName": "Expo Docs",
+            "url": "https://docs.expo.dev/versions/latest/"
+          }
+        ]
+      },
+      {
+        "id": "mb-release",
+        "title": "5. Testing & Release Preparation",
+        "description": "Prepare builds, test core flows, write release notes, and package the app for reviewers.",
+        "subtopics": ["Build profiles", "App testing", "Release checklist"],
+        "externalResources": [
+          {
+            "title": "Expo Build and Submit",
+            "sourceName": "Expo Docs",
+            "url": "https://docs.expo.dev/build/introduction/"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ai-ml",
+    "careerTitle": "AI/ML Engineer",
+    "description": "Learn Python, data preparation, model training, evaluation, and practical AI integration for products.",
+    "category": "AI",
+    "difficulty": "Advanced",
+    "duration": "14-18 weeks",
+    "outcome": "Applied AI demo project",
+    "portfolioOutcome": "An applied AI project with dataset notes, evaluation metrics, and product integration demo.",
+    "skills": ["Python", "Pandas", "Machine Learning", "Model Evaluation", "Prompt Engineering", "AI APIs", "MLOps Basics"],
+    "roadmapSteps": [
+      {
+        "id": "ai-python-data",
+        "title": "1. Python for Data Work",
+        "description": "Use Python notebooks, data structures, and libraries to inspect and transform datasets.",
+        "subtopics": ["Python basics", "Jupyter notebooks", "Pandas dataframes"],
+        "externalResources": [
+          {
+            "title": "Python for Everybody",
+            "sourceName": "PY4E",
+            "url": "https://www.py4e.com/"
+          }
+        ]
+      },
+      {
+        "id": "ai-data-prep",
+        "title": "2. Data Preparation & Feature Thinking",
+        "description": "Clean datasets, handle missing values, engineer features, and avoid leakage.",
+        "subtopics": ["Missing values", "Feature engineering", "Train-test split"],
+        "externalResources": [
+          {
+            "title": "Pandas User Guide",
+            "sourceName": "Pandas Docs",
+            "url": "https://pandas.pydata.org/docs/user_guide/"
+          }
+        ]
+      },
+      {
+        "id": "ai-model-basics",
+        "title": "3. Machine Learning Model Basics",
+        "description": "Train baseline models and understand classification, regression, and evaluation metrics.",
+        "subtopics": ["Classification", "Regression", "Model metrics"],
+        "externalResources": [
+          {
+            "title": "Scikit-learn User Guide",
+            "sourceName": "scikit-learn",
+            "url": "https://scikit-learn.org/stable/user_guide.html"
+          }
+        ]
+      },
+      {
+        "id": "ai-product-integration",
+        "title": "4. AI Product Integration",
+        "description": "Integrate model or AI API outputs into a product workflow with guardrails and clear UX.",
+        "subtopics": ["AI API calls", "Prompt design", "Fallback states"],
+        "externalResources": [
+          {
+            "title": "OpenAI API Documentation",
+            "sourceName": "OpenAI Docs",
+            "url": "https://platform.openai.com/docs"
+          }
+        ]
+      },
+      {
+        "id": "ai-evaluation-demo",
+        "title": "5. Evaluation & Demo Packaging",
+        "description": "Evaluate model behavior, document limitations, and package the project for stakeholder review.",
+        "subtopics": ["Evaluation metrics", "Error analysis", "Demo writeup"],
+        "externalResources": [
+          {
+            "title": "Machine Learning Crash Course",
+            "sourceName": "Google Developers",
+            "url": "https://developers.google.com/machine-learning/crash-course"
           }
         ]
       }

@@ -16,6 +16,11 @@ export interface CareerPath {
   id: string;
   careerTitle: string;
   description: string;
+  category?: string;
+  difficulty?: 'Beginner' | 'Intermediate' | 'Advanced';
+  duration?: string;
+  outcome?: string;
+  portfolioOutcome?: string;
   skills: string[];
   roadmapSteps: RoadmapStep[];
 }
