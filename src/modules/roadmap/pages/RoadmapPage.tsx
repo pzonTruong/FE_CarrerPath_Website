@@ -24,6 +24,25 @@ export const RoadmapPage = () => {
   const [recommendationHistory, setRecommendationHistory] = useState<CareerRecommendationHistory[]>([]);
   const [isLoadingRecommendations, setIsLoadingRecommendations] = useState(false);
   const [recommendationError, setRecommendationError] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState('All');
+  const [difficultyFilter, setDifficultyFilter] = useState('All');
+
+  const categories = ['All', ...Array.from(new Set(careerPaths.map((career) => career.category ?? 'Other')))];
+  const difficulties = ['All', 'Beginner', 'Intermediate', 'Advanced'];
+
+  const filteredCareerPaths = careerPaths.filter((career) => {
+    const query = searchQuery.trim().toLowerCase();
+    const matchesSearch = !query
+      || career.careerTitle.toLowerCase().includes(query)
+      || career.description.toLowerCase().includes(query)
+      || career.skills.some((skill) => skill.toLowerCase().includes(query))
+      || career.outcome?.toLowerCase().includes(query);
+    const matchesCategory = categoryFilter === 'All' || career.category === categoryFilter;
+    const matchesDifficulty = difficultyFilter === 'All' || career.difficulty === difficultyFilter;
+
+    return matchesSearch && matchesCategory && matchesDifficulty;
+  });
 
   useEffect(() => {
     if (!isSignedIn) {
@@ -93,6 +112,38 @@ export const RoadmapPage = () => {
           </h1>
           <p className="text-sm text-muted-foreground font-sans">
             Select an interactive path below to explore ordered stages, skill requirements, and curated learning resources.
+          </p>
+        </section>
+
+        <section className="border-2 border-foreground bg-card p-4 rounded-[4px] shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_rgba(250,250,250,0.15)]">
+          <div className="grid gap-3 md:grid-cols-[1fr_180px_180px]">
+            <Input
+              value={searchQuery}
+              onChange={(event) => setSearchQuery(event.target.value)}
+              placeholder="Search by role, skill, or outcome..."
+              className="border-2 border-foreground rounded-[2px] font-mono text-xs"
+            />
+            <select
+              value={categoryFilter}
+              onChange={(event) => setCategoryFilter(event.target.value)}
+              className="h-10 border-2 border-foreground bg-background px-3 font-mono text-xs uppercase rounded-[2px]"
+            >
+              {categories.map((category) => (
+                <option key={category} value={category}>{category}</option>
+              ))}
+            </select>
+            <select
+              value={difficultyFilter}
+              onChange={(event) => setDifficultyFilter(event.target.value)}
+              className="h-10 border-2 border-foreground bg-background px-3 font-mono text-xs uppercase rounded-[2px]"
+            >
+              {difficulties.map((difficulty) => (
+                <option key={difficulty} value={difficulty}>{difficulty}</option>
+              ))}
+            </select>
+          </div>
+          <p className="mt-3 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+            Showing {filteredCareerPaths.length} of {careerPaths.length} career paths
           </p>
         </section>
 
@@ -274,7 +325,7 @@ export const RoadmapPage = () => {
         </section>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {careerPaths.map((career) => (
+          {filteredCareerPaths.map((career) => (
             <CareerCard
               key={career.id}
               career={career}
@@ -282,6 +333,12 @@ export const RoadmapPage = () => {
             />
           ))}
         </div>
+        {filteredCareerPaths.length === 0 && (
+          <div className="border-2 border-dashed border-foreground bg-card p-8 text-center rounded-[4px]">
+            <p className="font-mono text-sm font-bold uppercase">No career paths match your filters</p>
+            <p className="mt-2 text-sm text-muted-foreground">Try another keyword, category, or difficulty level.</p>
+          </div>
+        )}
       </div>
     </div>
   );
