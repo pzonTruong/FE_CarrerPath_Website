@@ -7,6 +7,7 @@ import { AvatarUpload } from '@/modules/profile/components/AvatarUpload';
 import { CvUpload } from '@/modules/profile/components/CvUpload';
 import { PortfolioManager } from '@/modules/profile/components/PortfolioManager';
 import { ProfileEditForm } from '@/modules/profile/components/ProfileEditForm';
+import { StudyReminderCard } from '@/modules/profile/components/StudyReminderCard';
 import type { PortfolioItem } from '@/modules/profile/api/profile.api';
 import { Button } from '@/shared/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/shared/components/ui/card';
@@ -182,6 +183,9 @@ export const ProfilePage = () => {
           </Card>
         </div>
       </div>
+
+      {/* Study Reminder (Duolingo Style) */}
+      <StudyReminderCard />
 
       {/* Projects & Certificates (Full width below) */}
       <Card className="border-2 border-foreground bg-card text-card-foreground rounded-[4px] shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(250,250,250,0.15)]">
