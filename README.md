@@ -1,4 +1,33 @@
-# React + TypeScript + Vite
+# CareerPath Frontend
+
+Career roadmap platform UI built with React, TypeScript, and Vite.
+
+## Live Demo
+
+- https://fe-carrer-path-website.vercel.app/
+
+## Repository
+
+- https://github.com/Hiu11/FE_CarrerPath_Website
+
+## Tech Stack
+
+- React
+- TypeScript
+- Vite
+- React Router
+- Axios/Fetch API
+
+## Local Setup
+
+```bash
+npm install
+npm run dev
+```
+
+---
+
+## Original Vite Notes
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
